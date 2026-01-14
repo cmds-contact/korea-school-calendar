@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026년 교육 프로그램 기획 캘린더</title>
+    <style>
+        :root {
+            --elementary: #22c55e;
+            --middle: #3b82f6;
+            --high: #8b5cf6;
+            --university: #f97316;
+            --semester-gray: #e5e7eb;
+            --semester-gray-dark: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #1e3a5f;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #fff;
+            color: #3b82f6;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        /* Filter Section */
+        .filter-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 16px 24px;
+            margin-bottom: 20px;
+        }
+
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-label {
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .checkbox-item.elementary { background: #dcfce7; color: var(--elementary); }
+        .checkbox-item.middle { background: #dbeafe; color: var(--middle); }
+        .checkbox-item.high { background: #ede9fe; color: var(--high); }
+        .checkbox-item.university { background: #ffedd5; color: var(--university); }
+
+        .checkbox-item input {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .checkbox-item.unchecked {
+            opacity: 0.4;
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .month-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 12px;
+            overflow: hidden;
+        }
+
+        .month-title {
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+            margin-bottom: 8px;
+        }
+
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .weekdays span:first-child { color: #ef4444; }
+        .weekdays span:last-child { color: #3b82f6; }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+        }
+
+        .day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 4px;
+            position: relative;
+            min-height: 32px;
+        }
+
+        .day.empty {
+            background: transparent;
+        }
+
+        .day.semester {
+            background: var(--semester-gray);
+            color: #64748b;
+        }
+
+        .day.vacation {
+            background: #fefefe;
+            color: #374151;
+        }
+
+        .day.sunday .day-num { color: #ef4444; }
+        .day.saturday .day-num { color: #3b82f6; }
+
+        .day-num {
+            font-size: 0.72rem;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+
+        .markers {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 100%;
+        }
+
+        .marker {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+        }
+
+        .marker.elementary { background: var(--elementary); }
+        .marker.middle { background: var(--middle); }
+        .marker.high { background: var(--high); }
+        .marker.university { background: var(--university); }
+
+        .marker.hidden { display: none; }
+
+        /* Legend */
+        .legend-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            padding: 16px 24px;
+            margin-top: 20px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .legend-semester {
+            width: 20px;
+            height: 14px;
+            background: var(--semester-gray);
+            border-radius: 3px;
+        }
+
+        .legend-vacation {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .legend-vacation .marker {
+            width: 8px;
+            height: 8px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .calendar-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 12px;
+            }
+            .calendar-grid {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>2026년 교육 프로그램 기획 캘린더</h1>
+            <p class="subtitle">달력 연도 2026년 (1월~12월) 기준 | 방학 기간 한눈에 보기</p>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">상세 일정 보기</a>
+                <a href="planner.html" class="nav-link">2025학년도 캘린더</a>
+            </div>
+        </header>
+
+        <!-- Filter Section -->
+        <div class="filter-card">
+            <div class="filter-section">
+                <span class="filter-label">표시할 학교급:</span>
+                <div class="checkbox-group">
+                    <label class="checkbox-item elementary" data-target="elementary">
+                        <input type="checkbox" checked onchange="toggleSchool('elementary', this.checked)">
+                        <span>초등</span>
+                    </label>
+                    <label class="checkbox-item middle" data-target="middle">
+                        <input type="checkbox" checked onchange="toggleSchool('middle', this.checked)">
+                        <span>중학</span>
+                    </label>
+                    <label class="checkbox-item high" data-target="high">
+                        <input type="checkbox" checked onchange="toggleSchool('high', this.checked)">
+                        <span>고등</span>
+                    </label>
+                    <label class="checkbox-item university" data-target="university">
+                        <input type="checkbox" checked onchange="toggleSchool('university', this.checked)">
+                        <span>대학</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar Grid -->
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <!-- Legend -->
+        <div class="legend-card">
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-semester"></div>
+                    <span>학기 중</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-vacation">
+                        <div class="marker elementary"></div>
+                        <div class="marker middle"></div>
+                        <div class="marker high"></div>
+                        <div class="marker university"></div>
+                    </div>
+                    <span>방학 (초/중/고/대)</span>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>실제 날짜는 각 학교 학사일정을 반드시 확인하세요</p>
+            <p style="margin-top: 8px;">
+                <a href="index.html">상세 정보</a> |
+                <a href="planner.html">2025학년도 캘린더</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 2026년 학사일정 데이터 (학교급별 분리)
+        const schedule2026 = {
+            elementary: {
+                vacation: [
+                    { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },   // 겨울방학: 1/1 ~ 2/28
+                    { start: new Date(2026, 6, 19), end: new Date(2026, 7, 17) }, // 여름방학: 7/19 ~ 8/17
+                    { start: new Date(2026, 11, 22), end: new Date(2026, 11, 31) } // 겨울방학: 12/22 ~ 12/31
+                ]
+            },
+            middle: {
+                vacation: [
+                    { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },   // 겨울방학: 1/1 ~ 2/28
+                    { start: new Date(2026, 6, 17), end: new Date(2026, 7, 17) }, // 여름방학: 7/17 ~ 8/17
+                    { start: new Date(2026, 11, 27), end: new Date(2026, 11, 31) } // 겨울방학: 12/27 ~ 12/31
+                ]
+            },
+            high: {
+                vacation: [
+                    { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },   // 겨울방학: 1/1 ~ 2/28
+                    { start: new Date(2026, 6, 15), end: new Date(2026, 7, 18) }, // 여름방학: 7/15 ~ 8/18
+                    { start: new Date(2026, 11, 20), end: new Date(2026, 11, 31) } // 겨울방학: 12/20 ~ 12/31
+                ]
+            },
+            university: {
+                vacation: [
+                    { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },   // 겨울방학: 1/1 ~ 2/28
+                    { start: new Date(2026, 5, 20), end: new Date(2026, 7, 31) },  // 여름방학: 6/20 ~ 8/31
+                    { start: new Date(2026, 11, 20), end: new Date(2026, 11, 31) } // 겨울방학: 12/20 ~ 12/31
+                ]
+            }
+        };
+
+        // 특정 날짜가 방학인지 확인
+        function isVacation(date, schoolType) {
+            const vacations = schedule2026[schoolType].vacation;
+            return vacations.some(v => date >= v.start && date <= v.end);
+        }
+
+        // 달력 생성
+        function generateCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = '';
+
+            const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+            const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+
+            for (let month = 0; month < 12; month++) {
+                const monthCard = document.createElement('div');
+                monthCard.className = 'month-card';
+
+                // 월 제목
+                const title = document.createElement('div');
+                title.className = 'month-title';
+                title.textContent = months[month];
+                monthCard.appendChild(title);
+
+                // 요일 헤더
+                const weekdaysDiv = document.createElement('div');
+                weekdaysDiv.className = 'weekdays';
+                weekdays.forEach(day => {
+                    const span = document.createElement('span');
+                    span.textContent = day;
+                    weekdaysDiv.appendChild(span);
+                });
+                monthCard.appendChild(weekdaysDiv);
+
+                // 날짜 그리드
+                const daysDiv = document.createElement('div');
+                daysDiv.className = 'days';
+
+                const firstDay = new Date(2026, month, 1).getDay();
+                const lastDate = new Date(2026, month + 1, 0).getDate();
+
+                // 빈 칸 채우기
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement('div');
+                    emptyDay.className = 'day empty';
+                    daysDiv.appendChild(emptyDay);
+                }
+
+                // 날짜 채우기
+                for (let day = 1; day <= lastDate; day++) {
+                    const date = new Date(2026, month, day);
+                    const dayOfWeek = date.getDay();
+
+                    const dayDiv = document.createElement('div');
+                    dayDiv.className = 'day';
+                    dayDiv.dataset.date = date.toISOString().split('T')[0];
+
+                    // 요일 클래스
+                    if (dayOfWeek === 0) dayDiv.classList.add('sunday');
+                    if (dayOfWeek === 6) dayDiv.classList.add('saturday');
+
+                    // 날짜 숫자
+                    const dayNum = document.createElement('span');
+                    dayNum.className = 'day-num';
+                    dayNum.textContent = day;
+                    dayDiv.appendChild(dayNum);
+
+                    // 방학 여부 확인 및 마커 추가
+                    const markers = document.createElement('div');
+                    markers.className = 'markers';
+
+                    const schoolTypes = ['elementary', 'middle', 'high', 'university'];
+                    let hasVacation = false;
+
+                    schoolTypes.forEach(school => {
+                        const isVac = isVacation(date, school);
+                        if (isVac) hasVacation = true;
+
+                        const marker = document.createElement('div');
+                        marker.className = `marker ${school}`;
+                        marker.dataset.school = school;
+                        marker.dataset.vacation = isVac ? 'true' : 'false';
+                        if (!isVac) marker.classList.add('hidden');
+                        markers.appendChild(marker);
+                    });
+
+                    dayDiv.appendChild(markers);
+
+                    // 학기/방학 배경
+                    if (hasVacation) {
+                        dayDiv.classList.add('vacation');
+                    } else {
+                        dayDiv.classList.add('semester');
+                    }
+
+                    daysDiv.appendChild(dayDiv);
+                }
+
+                monthCard.appendChild(daysDiv);
+                grid.appendChild(monthCard);
+            }
+        }
+
+        // 학교급 토글
+        function toggleSchool(schoolType, isChecked) {
+            // 체크박스 라벨 스타일
+            const label = document.querySelector(`.checkbox-item[data-target="${schoolType}"]`);
+            if (isChecked) {
+                label.classList.remove('unchecked');
+            } else {
+                label.classList.add('unchecked');
+            }
+
+            // 마커 표시/숨김 - 방학인 마커만 토글
+            document.querySelectorAll(`.marker[data-school="${schoolType}"]`).forEach(marker => {
+                if (marker.dataset.vacation === 'true') {
+                    if (isChecked) {
+                        marker.classList.remove('hidden');
+                    } else {
+                        marker.classList.add('hidden');
+                    }
+                }
+                // 방학이 아닌 마커는 항상 hidden 유지
+            });
+
+            // 배경색 업데이트
+            updateBackgrounds();
+        }
+
+        // 배경색 업데이트 함수
+        function updateBackgrounds() {
+            // 현재 체크된 학교급 확인
+            const checkedSchools = [];
+            document.querySelectorAll('.checkbox-item input:checked').forEach(input => {
+                checkedSchools.push(input.closest('.checkbox-item').dataset.target);
+            });
+
+            // 모든 날짜 셀 순회
+            document.querySelectorAll('.day[data-date]').forEach(dayDiv => {
+                // 해당 날짜에서 체크된 학교급 중 방학인 것이 있는지 확인
+                const hasActiveVacation = checkedSchools.some(school => {
+                    const marker = dayDiv.querySelector(`.marker[data-school="${school}"]`);
+                    return marker && marker.dataset.vacation === 'true';
+                });
+
+                // 배경색 변경
+                if (hasActiveVacation) {
+                    dayDiv.classList.remove('semester');
+                    dayDiv.classList.add('vacation');
+                } else {
+                    dayDiv.classList.remove('vacation');
+                    dayDiv.classList.add('semester');
+                }
+            });
+        }
+
+        // 초기화
+        generateCalendar();
+    </script>
+</body>
+</html>

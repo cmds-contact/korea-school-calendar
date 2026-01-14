@@ -224,11 +224,10 @@
         }
 
         .period.semester {
-            opacity: 0.9;
+            background-color: #94a3b8 !important;
         }
 
         .period.vacation {
-            background-image: var(--vacation-pattern);
             font-weight: 700;
         }
 
@@ -281,8 +280,7 @@
         .legend-vacation {
             width: 24px;
             height: 16px;
-            background: linear-gradient(45deg, #fbbf24 25%, #fcd34d 25%, #fcd34d 50%, #fbbf24 50%, #fbbf24 75%, #fcd34d 75%);
-            background-size: 8px 8px;
+            background: linear-gradient(to right, var(--elementary), var(--middle), var(--high), var(--university));
             border-radius: 3px;
         }
 
@@ -412,7 +410,10 @@
         <header>
             <h1>교육 프로그램 기획 캘린더</h1>
             <p class="subtitle">2025학년도 (2025.3 ~ 2026.2) 서울/경기 기준</p>
-            <a href="index.html" class="nav-link">상세 일정 보기 →</a>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 15px;">
+                <a href="index.html" class="nav-link" style="margin-top: 0;">상세 일정 보기</a>
+                <a href="planner-2026.html" class="nav-link" style="margin-top: 0; background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); color: #fff;">2026년 캘린더 →</a>
+            </div>
         </header>
 
         <!-- Filter Section -->
@@ -464,100 +465,108 @@
                     <!-- Elementary School -->
                     <div class="timeline-row" data-school="elementary">
                         <div class="school-label">
-                            <span class="school-dot" style="background: var(--elementary)"></span>
+                            <span class="school-dot" style="background-color: var(--elementary)"></span>
                             초등학교
                         </div>
                         <div class="timeline-bar">
                             <!-- 3월: 1학기 -->
-                            <div class="period semester" style="background: var(--elementary)" data-tooltip="1학기 시작: 3/4"></div>
+                            <div class="period semester" data-tooltip="1학기 시작: 3/4"></div>
                             <!-- 4월: 1학기 -->
-                            <div class="period semester" style="background: var(--elementary)"></div>
+                            <div class="period semester"></div>
                             <!-- 5월: 1학기 -->
-                            <div class="period semester" style="background: var(--elementary)"></div>
+                            <div class="period semester"></div>
                             <!-- 6월: 1학기 -->
-                            <div class="period semester" style="background: var(--elementary)"></div>
-                            <!-- 7월: 1학기 + 여름방학 시작 -->
-                            <div class="period semester" style="background: var(--elementary)" data-tooltip="방학: 7/19~25"></div>
+                            <div class="period semester"></div>
+                            <!-- 7월: 학기→방학 전환 (7/19~25 → 약 65%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 65%, var(--elementary) 65%)" data-tooltip="방학: 7/19~25"></div>
                             <!-- 8월: 여름방학 -->
-                            <div class="period vacation" style="background: var(--elementary)" data-tooltip="여름방학: ~8/18~25"><span>여름</span></div>
+                            <div class="period vacation" style="background-color: var(--elementary)" data-tooltip="여름방학"></div>
                             <!-- 9월: 2학기 -->
-                            <div class="period semester" style="background: var(--elementary)" data-tooltip="2학기 시작"></div>
+                            <div class="period semester" data-tooltip="2학기 시작"></div>
                             <!-- 10월: 2학기 -->
-                            <div class="period semester" style="background: var(--elementary)"></div>
+                            <div class="period semester"></div>
                             <!-- 11월: 2학기 -->
-                            <div class="period semester" style="background: var(--elementary)"></div>
-                            <!-- 12월: 2학기 + 겨울방학 -->
-                            <div class="period semester" style="background: var(--elementary)" data-tooltip="방학: 12/22~"></div>
+                            <div class="period semester"></div>
+                            <!-- 12월: 학기→방학 전환 (12/22 → 약 70%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 70%, var(--elementary) 70%)" data-tooltip="방학: 12/22~"></div>
                             <!-- 1월: 겨울방학 -->
-                            <div class="period vacation" style="background: var(--elementary)" data-tooltip="겨울방학"><span>겨울</span></div>
+                            <div class="period vacation" style="background-color: var(--elementary)" data-tooltip="겨울방학"></div>
                             <!-- 2월: 겨울방학 -->
-                            <div class="period vacation" style="background: var(--elementary)" data-tooltip="~2월말"><span>방학</span></div>
+                            <div class="period vacation" style="background-color: var(--elementary)" data-tooltip="~2월말"></div>
                         </div>
                     </div>
 
                     <!-- Middle School -->
                     <div class="timeline-row" data-school="middle">
                         <div class="school-label">
-                            <span class="school-dot" style="background: var(--middle)"></span>
+                            <span class="school-dot" style="background-color: var(--middle)"></span>
                             중학교
                         </div>
                         <div class="timeline-bar">
-                            <div class="period semester" style="background: var(--middle)" data-tooltip="1학기 시작: 3/4"></div>
-                            <div class="period semester" style="background: var(--middle)"></div>
-                            <div class="period semester" style="background: var(--middle)"></div>
-                            <div class="period semester" style="background: var(--middle)"></div>
-                            <div class="period semester" style="background: var(--middle)" data-tooltip="방학: 7/17"></div>
-                            <div class="period vacation" style="background: var(--middle)" data-tooltip="여름방학: ~8/18"><span>여름</span></div>
-                            <div class="period semester" style="background: var(--middle)" data-tooltip="2학기: 8/18~"></div>
-                            <div class="period semester" style="background: var(--middle)"></div>
-                            <div class="period semester" style="background: var(--middle)"></div>
-                            <div class="period semester" style="background: var(--middle)" data-tooltip="방학: 12/27"></div>
-                            <div class="period vacation" style="background: var(--middle)" data-tooltip="겨울방학"><span>겨울</span></div>
-                            <div class="period vacation" style="background: var(--middle)" data-tooltip="~2월초"><span>방학</span></div>
+                            <div class="period semester" data-tooltip="1학기 시작: 3/4"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester"></div>
+                            <!-- 7월: 학기→방학 전환 (7/17 → 약 55%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 55%, var(--middle) 55%)" data-tooltip="방학: 7/17~"></div>
+                            <!-- 8월: 방학→학기 전환 (8/18 → 약 60%) -->
+                            <div class="period" style="background: linear-gradient(to right, var(--middle) 60%, #94a3b8 60%)" data-tooltip="~8/18 개학"></div>
+                            <div class="period semester" data-tooltip="2학기"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester"></div>
+                            <!-- 12월: 학기→방학 전환 (12/27 → 약 87%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 87%, var(--middle) 87%)" data-tooltip="방학: 12/27~"></div>
+                            <div class="period vacation" style="background-color: var(--middle)" data-tooltip="겨울방학"></div>
+                            <div class="period vacation" style="background-color: var(--middle)" data-tooltip="~2월초"></div>
                         </div>
                     </div>
 
                     <!-- High School -->
                     <div class="timeline-row" data-school="high">
                         <div class="school-label">
-                            <span class="school-dot" style="background: var(--high)"></span>
+                            <span class="school-dot" style="background-color: var(--high)"></span>
                             고등학교
                         </div>
                         <div class="timeline-bar">
-                            <div class="period semester" style="background: var(--high)" data-tooltip="1학기: 3/3~4"></div>
-                            <div class="period semester" style="background: var(--high)"></div>
-                            <div class="period semester" style="background: var(--high)"></div>
-                            <div class="period semester" style="background: var(--high)"></div>
-                            <div class="period semester" style="background: var(--high)" data-tooltip="방학: 7/15~20"></div>
-                            <div class="period vacation" style="background: var(--high)" data-tooltip="여름방학: ~8/19~26"><span>여름</span></div>
-                            <div class="period semester" style="background: var(--high)" data-tooltip="2학기: 8/19~26"></div>
-                            <div class="period semester" style="background: var(--high)"></div>
-                            <div class="period semester" style="background: var(--high)" data-tooltip="3학년 수능: 11월"></div>
-                            <div class="period semester" style="background: var(--high)" data-tooltip="방학: 12/20~31"></div>
-                            <div class="period vacation" style="background: var(--high)" data-tooltip="겨울방학"><span>겨울</span></div>
-                            <div class="period vacation" style="background: var(--high)" data-tooltip="~2월"><span>방학</span></div>
+                            <div class="period semester" data-tooltip="1학기: 3/3~4"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester"></div>
+                            <!-- 7월: 학기→방학 전환 (7/15~20 → 약 55%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 55%, var(--high) 55%)" data-tooltip="방학: 7/15~20"></div>
+                            <!-- 8월: 방학→학기 전환 (8/19~26 → 약 70%) -->
+                            <div class="period" style="background: linear-gradient(to right, var(--high) 70%, #94a3b8 70%)" data-tooltip="~8/19~26 개학"></div>
+                            <div class="period semester" data-tooltip="2학기"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester" data-tooltip="3학년 수능: 11월"></div>
+                            <!-- 12월: 학기→방학 전환 (12/20~31 → 약 65%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 65%, var(--high) 65%)" data-tooltip="방학: 12/20~"></div>
+                            <div class="period vacation" style="background-color: var(--high)" data-tooltip="겨울방학"></div>
+                            <div class="period vacation" style="background-color: var(--high)" data-tooltip="~2월"></div>
                         </div>
                     </div>
 
                     <!-- University -->
                     <div class="timeline-row" data-school="university">
                         <div class="school-label">
-                            <span class="school-dot" style="background: var(--university)"></span>
+                            <span class="school-dot" style="background-color: var(--university)"></span>
                             대학교
                         </div>
                         <div class="timeline-bar">
-                            <div class="period semester" style="background: var(--university)" data-tooltip="1학기: 3/3~4"></div>
-                            <div class="period semester" style="background: var(--university)"></div>
-                            <div class="period semester" style="background: var(--university)"></div>
-                            <div class="period semester" style="background: var(--university)" data-tooltip="종강: 6/16~23"></div>
-                            <div class="period vacation" style="background: var(--university)" data-tooltip="여름방학+계절학기"><span>여름</span></div>
-                            <div class="period vacation" style="background: var(--university)" data-tooltip="계절학기: ~8/4"><span>방학</span></div>
-                            <div class="period semester" style="background: var(--university)" data-tooltip="2학기: 9/1"></div>
-                            <div class="period semester" style="background: var(--university)"></div>
-                            <div class="period semester" style="background: var(--university)"></div>
-                            <div class="period semester" style="background: var(--university)" data-tooltip="종강: 12/12~20"></div>
-                            <div class="period vacation" style="background: var(--university)" data-tooltip="겨울방학+계절학기"><span>겨울</span></div>
-                            <div class="period vacation" style="background: var(--university)" data-tooltip="~2/28"><span>방학</span></div>
+                            <div class="period semester" data-tooltip="1학기: 3/3~4"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester"></div>
+                            <!-- 6월: 학기→방학 전환 (6/16~23 → 약 60%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 60%, var(--university) 60%)" data-tooltip="종강: 6/16~23"></div>
+                            <div class="period vacation" style="background-color: var(--university)" data-tooltip="여름방학+계절학기"></div>
+                            <div class="period vacation" style="background-color: var(--university)" data-tooltip="계절학기: ~8월"></div>
+                            <div class="period semester" data-tooltip="2학기: 9/1"></div>
+                            <div class="period semester"></div>
+                            <div class="period semester"></div>
+                            <!-- 12월: 학기→방학 전환 (12/12~20 → 약 50%) -->
+                            <div class="period" style="background: linear-gradient(to right, #94a3b8 50%, var(--university) 50%)" data-tooltip="종강: 12/12~20"></div>
+                            <div class="period vacation" style="background-color: var(--university)" data-tooltip="겨울방학+계절학기"></div>
+                            <div class="period vacation" style="background-color: var(--university)" data-tooltip="~2/28"></div>
                         </div>
                     </div>
                 </div>
