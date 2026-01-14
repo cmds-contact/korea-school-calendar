@@ -32,45 +32,80 @@
             margin: 0 auto;
         }
 
-        header {
+        /* Site Header */
+        .site-header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: #fff;
+            margin: -20px -20px 20px -20px;
+            padding: 0;
+        }
+
+        .header-content {
             text-align: center;
-            margin-bottom: 24px;
+            padding: 32px 20px 16px;
         }
 
-        h1 {
+        .header-content h1 {
             font-size: 1.8rem;
-            color: #1e3a5f;
             margin-bottom: 6px;
+            color: #fff;
         }
 
-        .subtitle {
-            color: #64748b;
+        .header-content .subtitle {
+            opacity: 0.9;
             font-size: 0.95rem;
+            color: #fff;
         }
 
-        .nav-links {
+        /* Site Navigation */
+        .site-nav {
+            padding: 0 20px 20px;
+        }
+
+        .nav-container {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-top: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
 
         .nav-link {
             display: inline-block;
-            padding: 8px 20px;
-            background: #fff;
-            color: #3b82f6;
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
             text-decoration: none;
             border-radius: 20px;
             font-size: 0.9rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.2s;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
 
         .nav-link:hover {
-            background: #3b82f6;
-            color: #fff;
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .nav-link.active {
+            background: #fff;
+            color: #1e40af;
+            font-weight: 600;
+        }
+
+        .nav-link--accent {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .nav-link--accent:hover {
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+
+        .nav-link--highlight {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+        }
+
+        .nav-link--highlight:hover {
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
         }
 
         /* Filter Section */
@@ -303,25 +338,37 @@
             body {
                 padding: 12px;
             }
+            .site-header {
+                margin: -12px -12px 16px -12px;
+            }
+            .header-content h1 {
+                font-size: 1.4rem;
+            }
+            .nav-link {
+                padding: 6px 14px;
+                font-size: 0.85rem;
+            }
             .calendar-grid {
                 grid-template-columns: 1fr;
-            }
-            h1 {
-                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>2026년 교육 프로그램 기획 캘린더</h1>
-            <p class="subtitle">달력 연도 2026년 (1월~12월) 기준 | 방학 기간 한눈에 보기</p>
-            <div class="nav-links">
-                <a href="index.html" class="nav-link">상세 일정 보기</a>
-                <a href="planner.html" class="nav-link">2025학년도 캘린더</a>
-                <a href="markdown-export.html" class="nav-link" style="background: #dcfce7; color: #22c55e;">MD 복사</a>
+        <header class="site-header">
+            <div class="header-content">
+                <h1>2026년 교육 프로그램 기획 캘린더</h1>
+                <p class="subtitle">달력 연도 2026년 (1월~12월) 기준 | 방학 기간 한눈에 보기</p>
             </div>
+            <nav class="site-nav">
+                <div class="nav-container">
+                    <a href="index.html" class="nav-link">상세 일정</a>
+                    <a href="planner.html" class="nav-link">2025 캘린더</a>
+                    <a href="planner-2026.html" class="nav-link active">2026 캘린더</a>
+                    <a href="markdown-export.html" class="nav-link nav-link--accent">MD 복사</a>
+                </div>
+            </nav>
         </header>
 
         <!-- Filter Section -->

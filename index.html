@@ -37,26 +37,80 @@
             padding: 20px;
         }
 
-        /* Header */
-        header {
+        /* Site Header */
+        .site-header {
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
             color: #fff;
-            padding: 40px 20px;
-            text-align: center;
         }
 
-        header h1 {
-            font-size: 2.2rem;
+        .header-content {
+            text-align: center;
+            padding: 32px 20px 16px;
+        }
+
+        .header-content h1 {
+            font-size: 2rem;
             margin-bottom: 8px;
         }
 
-        header .subtitle {
+        .header-content .subtitle {
             opacity: 0.9;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
-        /* Navigation */
-        nav {
+        /* Site Navigation */
+        .site-nav {
+            padding: 0 20px 20px;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            display: inline-block;
+            padding: 8px 18px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .nav-link.active {
+            background: #fff;
+            color: #1e40af;
+            font-weight: 600;
+        }
+
+        .nav-link--accent {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+        }
+
+        .nav-link--accent:hover {
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+        }
+
+        .nav-link--highlight {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+        }
+
+        .nav-link--highlight:hover {
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Section Navigation (학교급 앵커) */
+        .section-nav {
             background: #fff;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky;
@@ -64,22 +118,19 @@
             z-index: 100;
         }
 
-        nav .container {
+        .section-nav .container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
             padding: 12px 20px;
-            flex-wrap: wrap;
-            gap: 10px;
         }
 
-        .nav-links {
+        .section-nav-links {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
         }
 
-        .nav-links a {
+        .section-link {
             padding: 8px 16px;
             border-radius: 20px;
             text-decoration: none;
@@ -88,30 +139,14 @@
             transition: all 0.2s;
         }
 
-        .nav-links a.elementary { background: var(--elementary-light); color: var(--elementary); }
-        .nav-links a.middle { background: var(--middle-light); color: var(--middle); }
-        .nav-links a.high { background: var(--high-light); color: var(--high); }
-        .nav-links a.university { background: var(--university-light); color: var(--university); }
+        .section-link.elementary { background: var(--elementary-light); color: var(--elementary); }
+        .section-link.middle { background: var(--middle-light); color: var(--middle); }
+        .section-link.high { background: var(--high-light); color: var(--high); }
+        .section-link.university { background: var(--university-light); color: var(--university); }
 
-        .nav-links a:hover {
+        .section-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .planner-link {
-            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
-            color: #fff !important;
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.2s;
-        }
-
-        .planner-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
         }
 
         /* Overview Section */
@@ -295,8 +330,18 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 1.6rem;
+            .header-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .nav-link {
+                padding: 6px 14px;
+                font-size: 0.85rem;
+            }
+
+            .section-link {
+                padding: 6px 12px;
+                font-size: 0.8rem;
             }
 
             .data-table th,
@@ -350,23 +395,28 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>한국 학교 학사일정 가이드</h1>
-        <p class="subtitle">2025학년도 (2025.3 ~ 2026.2) 서울/경기 기준</p>
+    <header class="site-header">
+        <div class="header-content">
+            <h1>한국 학교 학사일정 가이드</h1>
+            <p class="subtitle">2025학년도 (2025.3 ~ 2026.2) 서울/경기 기준</p>
+        </div>
+        <nav class="site-nav">
+            <div class="nav-container">
+                <a href="index.html" class="nav-link active">상세 일정</a>
+                <a href="planner.html" class="nav-link">2025 캘린더</a>
+                <a href="planner-2026.html" class="nav-link nav-link--highlight">2026 캘린더</a>
+                <a href="markdown-export.html" class="nav-link nav-link--accent">MD 복사</a>
+            </div>
+        </nav>
     </header>
 
-    <nav>
+    <nav class="section-nav">
         <div class="container">
-            <div class="nav-links">
-                <a href="#elementary" class="elementary">초등학교</a>
-                <a href="#middle" class="middle">중학교</a>
-                <a href="#high" class="high">고등학교</a>
-                <a href="#university" class="university">대학교</a>
-            </div>
-            <div style="display: flex; gap: 8px;">
-                <a href="planner.html" class="planner-link">기획 캘린더</a>
-                <a href="planner-2026.html" class="planner-link" style="background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);">2026년 →</a>
-                <a href="markdown-export.html" class="planner-link" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">MD 복사</a>
+            <div class="section-nav-links">
+                <a href="#elementary" class="section-link elementary">초등학교</a>
+                <a href="#middle" class="section-link middle">중학교</a>
+                <a href="#high" class="section-link high">고등학교</a>
+                <a href="#university" class="section-link university">대학교</a>
             </div>
         </div>
     </nav>
