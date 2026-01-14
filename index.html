@@ -4,18 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>한국 학교 학사일정 가이드 | 2025학년도</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Pretendard';
+            src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+        }
+
         :root {
-            --primary: #1e40af;
-            --primary-light: #dbeafe;
-            --elementary: #22c55e;
-            --elementary-light: #dcfce7;
-            --middle: #3b82f6;
+            /* Refined School Colors */
+            --elementary: #059669;
+            --elementary-light: #d1fae5;
+            --elementary-bg: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+
+            --middle: #2563eb;
             --middle-light: #dbeafe;
-            --high: #8b5cf6;
+            --middle-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+
+            --high: #7c3aed;
             --high-light: #ede9fe;
-            --university: #f97316;
-            --university-light: #ffedd5;
+            --high-bg: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+
+            --university: #ea580c;
+            --university-light: #fed7aa;
+            --university-bg: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%);
+
+            /* Core Colors */
+            --ink: #1a1a2e;
+            --ink-light: #4a4a68;
+            --ink-muted: #8b8ba3;
+            --paper: #fefdfb;
+            --paper-warm: #faf8f5;
+            --cream: #f5f3ef;
+            --accent: #c9a227;
+            --accent-light: #f5ecd4;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.04), 0 1px 2px rgba(26, 26, 46, 0.06);
+            --shadow-md: 0 4px 12px rgba(26, 26, 46, 0.05), 0 2px 6px rgba(26, 26, 46, 0.04);
+            --shadow-lg: 0 12px 40px rgba(26, 26, 46, 0.08), 0 4px 12px rgba(26, 26, 46, 0.04);
+            --shadow-xl: 0 24px 60px rgba(26, 26, 46, 0.12), 0 8px 20px rgba(26, 26, 46, 0.06);
         }
 
         * {
@@ -24,203 +54,415 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
-            line-height: 1.6;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.7;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Subtle background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(ellipse at 20% 30%, rgba(201, 162, 39, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(37, 99, 235, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 24px;
         }
 
-        /* Site Header */
-        .site-header {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+        /* ========================================
+           HERO HEADER
+           ======================================== */
+        .hero {
+            position: relative;
+            background: linear-gradient(165deg, #1a1a2e 0%, #2d2d4a 50%, #1a1a2e 100%);
             color: #fff;
+            overflow: hidden;
+            padding-bottom: 0;
         }
 
-        .header-content {
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(201, 162, 39, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
             text-align: center;
-            padding: 32px 20px 16px;
+            padding: 80px 24px 48px;
         }
 
-        .header-content h1 {
-            font-size: 2rem;
-            margin-bottom: 8px;
+        .hero-badge {
+            display: inline-block;
+            background: rgba(201, 162, 39, 0.2);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeSlideDown 0.6s ease-out both;
         }
 
-        .header-content .subtitle {
-            opacity: 0.9;
-            font-size: 1rem;
+        .hero h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+            margin-bottom: 16px;
+            animation: fadeSlideDown 0.6s ease-out 0.1s both;
         }
 
-        /* Site Navigation */
+        .hero .subtitle {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.7);
+            animation: fadeSlideDown 0.6s ease-out 0.2s both;
+        }
+
+        @keyframes fadeSlideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
         .site-nav {
-            padding: 0 20px 20px;
+            position: relative;
+            z-index: 2;
+            padding: 0 24px 32px;
         }
 
         .nav-container {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
+            animation: fadeSlideDown 0.6s ease-out 0.3s both;
         }
 
         .nav-link {
-            display: inline-block;
-            padding: 8px 18px;
-            background: rgba(255, 255, 255, 0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #fff;
             text-decoration: none;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
             font-weight: 500;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-link:hover {
-            background: rgba(255, 255, 255, 0.35);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         .nav-link.active {
             background: #fff;
-            color: #1e40af;
+            color: var(--ink);
+            border-color: #fff;
             font-weight: 600;
         }
 
         .nav-link--accent {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            background: linear-gradient(135deg, var(--elementary) 0%, #047857 100%);
+            border-color: transparent;
         }
 
         .nav-link--accent:hover {
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+            box-shadow: 0 8px 24px rgba(5, 150, 105, 0.35);
         }
 
         .nav-link--highlight {
-            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-color: transparent;
         }
 
         .nav-link--highlight:hover {
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
         }
 
-        /* Section Navigation (학교급 앵커) */
+        /* ========================================
+           SECTION NAV (Sticky)
+           ======================================== */
         .section-nav {
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: var(--paper);
+            border-bottom: 1px solid rgba(26, 26, 46, 0.06);
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .section-nav.scrolled {
+            box-shadow: var(--shadow-md);
         }
 
         .section-nav .container {
             display: flex;
             justify-content: center;
-            padding: 12px 20px;
+            padding: 16px 24px;
         }
 
         .section-nav-links {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .section-link {
-            padding: 8px 16px;
-            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 100px;
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
+            font-weight: 600;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
         }
 
-        .section-link.elementary { background: var(--elementary-light); color: var(--elementary); }
-        .section-link.middle { background: var(--middle-light); color: var(--middle); }
-        .section-link.high { background: var(--high-light); color: var(--high); }
-        .section-link.university { background: var(--university-light); color: var(--university); }
+        .section-link.elementary {
+            background: var(--elementary-light);
+            color: var(--elementary);
+        }
+        .section-link.middle {
+            background: var(--middle-light);
+            color: var(--middle);
+        }
+        .section-link.high {
+            background: var(--high-light);
+            color: var(--high);
+        }
+        .section-link.university {
+            background: var(--university-light);
+            color: var(--university);
+        }
 
         .section-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
 
-        /* Overview Section */
+        .section-link.elementary:hover { border-color: var(--elementary); }
+        .section-link.middle:hover { border-color: var(--middle); }
+        .section-link.high:hover { border-color: var(--high); }
+        .section-link.university:hover { border-color: var(--university); }
+
+        /* ========================================
+           MAIN CONTENT
+           ======================================== */
+        main {
+            padding: 60px 0 80px;
+        }
+
+        /* ========================================
+           OVERVIEW SECTION
+           ======================================== */
         .overview {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border-radius: 16px;
-            padding: 24px;
-            margin: 30px 0;
+            background: var(--cream);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .overview h2 {
-            color: #065f46;
-            margin-bottom: 16px;
-            font-size: 1.2rem;
+        .overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(201, 162, 39, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .overview-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .overview-header h2 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .overview-header::before {
+            content: '';
+            width: 4px;
+            height: 28px;
+            background: linear-gradient(180deg, var(--accent) 0%, #d4a825 100%);
+            border-radius: 2px;
         }
 
         .overview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
         }
 
         .overview-item {
-            background: #fff;
-            padding: 16px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .overview-item .period {
-            font-weight: 700;
-            color: #059669;
-            font-size: 1.1rem;
-        }
-
-        .overview-item .days {
-            color: #047857;
-            font-size: 0.9rem;
-            margin-top: 4px;
-        }
-
-        .overview-item .label {
-            color: #6b7280;
-            font-size: 0.85rem;
-            margin-top: 8px;
-        }
-
-        /* School Section */
-        .school-section {
-            background: #fff;
+            background: var(--paper);
+            padding: 28px 24px;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
         }
 
-        .school-header {
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .overview-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #e0b52c);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
         }
 
-        .school-header.elementary { background: var(--elementary-light); }
-        .school-header.middle { background: var(--middle-light); }
-        .school-header.high { background: var(--high-light); }
-        .school-header.university { background: var(--university-light); }
+        .overview-item:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .overview-item:hover::after {
+            transform: scaleX(1);
+        }
+
+        .overview-item .period {
+            font-family: 'Noto Serif KR', serif;
+            font-weight: 700;
+            color: var(--ink);
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .overview-item .days {
+            color: var(--accent);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .overview-item .label {
+            color: var(--ink-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ========================================
+           SCHOOL SECTIONS
+           ======================================== */
+        .school-section {
+            background: var(--paper);
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .school-section:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .school-header {
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.5;
+        }
+
+        .school-header.elementary { background: var(--elementary-bg); }
+        .school-header.middle { background: var(--middle-bg); }
+        .school-header.high { background: var(--high-bg); }
+        .school-header.university { background: var(--university-bg); }
 
         .school-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .school-header-text {
+            position: relative;
+            z-index: 1;
         }
 
         .school-header h2 {
-            font-size: 1.4rem;
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
 
         .school-header.elementary h2 { color: var(--elementary); }
@@ -228,24 +470,35 @@
         .school-header.high h2 { color: var(--high); }
         .school-header.university h2 { color: var(--university); }
 
+        .school-header-subtitle {
+            font-size: 0.9rem;
+            color: var(--ink-muted);
+        }
+
         .school-content {
-            padding: 24px;
+            padding: 40px;
         }
 
         .section-title {
             font-size: 1rem;
             font-weight: 600;
-            color: #475569;
-            margin-bottom: 12px;
+            color: var(--ink-light);
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            padding-left: 16px;
+            position: relative;
         }
 
         .section-title::before {
             content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
             width: 4px;
-            height: 18px;
+            height: 20px;
             border-radius: 2px;
         }
 
@@ -254,163 +507,321 @@
         .high .section-title::before { background: var(--high); }
         .university .section-title::before { background: var(--university); }
 
-        /* Tables */
+        /* ========================================
+           DATA TABLES
+           ======================================== */
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 32px;
+            border-radius: 12px;
+            border: 1px solid rgba(26, 26, 46, 0.06);
+        }
+
         .data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 24px;
+            font-size: 0.95rem;
         }
 
         .data-table th,
         .data-table td {
-            padding: 12px 16px;
+            padding: 16px 20px;
             text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid rgba(26, 26, 46, 0.06);
+        }
+
+        .data-table thead {
+            background: var(--cream);
         }
 
         .data-table th {
-            background: #f8fafc;
             font-weight: 600;
-            color: #475569;
+            color: var(--ink-light);
             font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .data-table tbody tr {
+            transition: background 0.2s ease;
         }
 
         .data-table tbody tr:hover {
-            background: #f8fafc;
+            background: var(--paper-warm);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
         }
 
         .data-table td:first-child {
             font-weight: 600;
-            color: #334155;
+            color: var(--ink);
         }
 
         .highlight {
-            background: #fef9c3 !important;
+            position: relative;
         }
 
         .highlight td {
-            color: #854d0e;
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.08) 0%, rgba(201, 162, 39, 0.02) 100%);
         }
 
-        /* Notes */
+        .highlight td:first-child::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+        }
+
+        /* ========================================
+           NOTES
+           ======================================== */
         .notes {
-            background: #f1f5f9;
-            border-radius: 8px;
-            padding: 16px;
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 20px 24px;
             font-size: 0.9rem;
-            color: #64748b;
+            color: var(--ink-light);
+            border-left: 4px solid var(--accent);
+        }
+
+        .notes strong {
+            color: var(--ink);
+            display: block;
+            margin-bottom: 8px;
         }
 
         .notes ul {
             margin-left: 20px;
+            margin-top: 8px;
         }
 
         .notes li {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            line-height: 1.6;
         }
 
-        /* Footer */
-        footer {
-            background: #1e293b;
-            color: #94a3b8;
-            padding: 30px 20px;
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        footer p {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content h1 {
-                font-size: 1.5rem;
-            }
-
-            .nav-link {
-                padding: 6px 14px;
-                font-size: 0.85rem;
-            }
-
-            .section-link {
-                padding: 6px 12px;
-                font-size: 0.8rem;
-            }
-
-            .data-table th,
-            .data-table td {
-                padding: 10px 8px;
-                font-size: 0.85rem;
-            }
-
-            .school-content {
-                padding: 16px;
-            }
-        }
-
-        /* 대학교 특별 스타일 */
+        /* ========================================
+           UNIVERSITY SPECIAL SECTION
+           ======================================== */
         .univ-example {
-            background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
+            background: var(--university-bg);
+            border-radius: 16px;
+            padding: 28px;
+            margin-top: 28px;
+            border: 1px solid rgba(234, 88, 12, 0.1);
         }
 
         .univ-example h4 {
-            color: #c2410c;
-            margin-bottom: 12px;
+            color: var(--university);
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .univ-example h4::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--university);
+            border-radius: 50%;
         }
 
         .univ-timeline {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
         }
 
         .univ-timeline-item {
-            background: #fff;
-            padding: 12px;
-            border-radius: 8px;
+            background: var(--paper);
+            padding: 16px;
+            border-radius: 12px;
             text-align: center;
             border-left: 3px solid var(--university);
+            transition: all 0.25s ease;
+        }
+
+        .univ-timeline-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
         }
 
         .univ-timeline-item .date {
             font-weight: 700;
             color: var(--university);
+            font-size: 0.95rem;
         }
 
         .univ-timeline-item .event {
-            font-size: 0.85rem;
-            color: #64748b;
-            margin-top: 4px;
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+            margin-top: 6px;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            background: var(--ink);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 60px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(201, 162, 39, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        footer strong {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: #e0b52c;
+        }
+
+        .footer-nav {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-nav a {
+            margin: 0 16px;
+        }
+
+        /* ========================================
+           SCROLL ANIMATIONS
+           ======================================== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 60px 20px 36px;
+            }
+
+            .overview {
+                padding: 28px 20px;
+                border-radius: 16px;
+            }
+
+            .school-header {
+                padding: 24px;
+            }
+
+            .school-content {
+                padding: 24px;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 12px 14px;
+                font-size: 0.85rem;
+            }
+
+            .univ-timeline {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-nav-links {
+                gap: 8px;
+            }
+
+            .section-link {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+
+            main {
+                padding: 40px 0 60px;
+            }
+
+            .school-section {
+                margin-bottom: 28px;
+                border-radius: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-link {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+
+            .univ-timeline {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="header-content">
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">2025학년도</span>
             <h1>한국 학교 학사일정 가이드</h1>
-            <p class="subtitle">2025학년도 (2025.3 ~ 2026.2) 서울/경기 기준</p>
+            <p class="subtitle">서울/경기 기준 초·중·고·대학교 학기 및 방학 일정</p>
         </div>
         <nav class="site-nav">
             <div class="nav-container">
                 <a href="index.html" class="nav-link active">상세 일정</a>
-                <a href="planner.html" class="nav-link">2025 캘린더</a>
+                <a href="planner.html" class="nav-link">일정 요약</a>
                 <a href="planner-2026.html" class="nav-link nav-link--highlight">2026 캘린더</a>
                 <a href="markdown-export.html" class="nav-link nav-link--accent">MD 복사</a>
             </div>
         </nav>
     </header>
 
-    <nav class="section-nav">
+    <nav class="section-nav" id="sectionNav">
         <div class="container">
             <div class="section-nav-links">
                 <a href="#elementary" class="section-link elementary">초등학교</a>
@@ -421,457 +832,522 @@
         </div>
     </nav>
 
-    <div class="container">
-        <!-- Overview -->
-        <div class="overview">
-            <h2>방학 기간 요약 (전형적인 기준)</h2>
-            <div class="overview-grid">
-                <div class="overview-item">
-                    <div class="period">여름방학</div>
-                    <div class="days">21~35일</div>
-                    <div class="label">8월 중심</div>
+    <main>
+        <div class="container">
+            <!-- Overview -->
+            <div class="overview fade-in">
+                <div class="overview-header">
+                    <h2>방학 기간 요약</h2>
                 </div>
-                <div class="overview-item">
-                    <div class="period">겨울방학</div>
-                    <div class="days">30~60일</div>
-                    <div class="label">1월 중심</div>
-                </div>
-                <div class="overview-item">
-                    <div class="period">봄방학</div>
-                    <div class="days">15~20일</div>
-                    <div class="label">2월 중순 (학년말)</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Elementary School -->
-        <section id="elementary" class="school-section">
-            <div class="school-header elementary">
-                <span class="school-icon">🏫</span>
-                <h2>초등학교</h2>
-            </div>
-            <div class="school-content elementary">
-                <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>시기 (대략)</th>
-                            <th>특징</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기</td>
-                            <td>3월 초 ~ 7월 하순</td>
-                            <td>3월 초 입학식·시업식, 수업일수 약 95일 내외</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학</td>
-                            <td>7월 하순 ~ 8월 중·하순</td>
-                            <td>약 4주 내외</td>
-                        </tr>
-                        <tr>
-                            <td>2학기</td>
-                            <td>8월 중·하순 ~ 12월 말</td>
-                            <td>여름방학 후 개학식</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학</td>
-                            <td>12월 말 ~ 다음해 2월 말</td>
-                            <td>1~2개월 내외, 새 학년은 3월 초</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3 class="section-title">서울/경기 2025학년도 예시</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>예시 날짜</th>
-                            <th>비고</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기 개학 (입학식)</td>
-                            <td>2025-03-04 (화)</td>
-                            <td>수도권 다수 학교 기준</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학 시작</td>
-                            <td>2025-07-19 ~ 07-25</td>
-                            <td>7월 셋째~넷째 주</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>2학기 개학</td>
-                            <td>2025-08-18 ~ 08-25</td>
-                            <td>약 29일 방학</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학 시작</td>
-                            <td>2025-12-22 ~ 12-31</td>
-                            <td>12월 넷째 주</td>
-                        </tr>
-                        <tr>
-                            <td>새 학년 개학</td>
-                            <td>2026-03-02 ~ 03-03</td>
-                            <td>3월 첫 주</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Middle School -->
-        <section id="middle" class="school-section">
-            <div class="school-header middle">
-                <span class="school-icon">📚</span>
-                <h2>중학교</h2>
-            </div>
-            <div class="school-content middle">
-                <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>시기 (대략)</th>
-                            <th>특징</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기</td>
-                            <td>3월 초 ~ 7월 초·중순</td>
-                            <td>4~5월 중간고사, 6월 기말고사</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학</td>
-                            <td>7월 중순 ~ 8월 말</td>
-                            <td>약 30~40일</td>
-                        </tr>
-                        <tr>
-                            <td>2학기</td>
-                            <td>8월 말·9월 초 ~ 12월 말</td>
-                            <td>10월 중간고사, 11~12월 기말고사</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학</td>
-                            <td>12월 말 ~ 다음해 2월 초·중순</td>
-                            <td>약 30~40일</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3 class="section-title">경기 2025학년도 예시 (판곡중학교)</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>예시 날짜</th>
-                            <th>비고</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기 개학 (입학식)</td>
-                            <td>2025-03-04 (화)</td>
-                            <td>1학기 시작</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학 시작</td>
-                            <td>2025-07-17 (목)</td>
-                            <td>7월 17일 방학식</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>2학기 개학</td>
-                            <td>2025-08-18 (월)</td>
-                            <td>8월 18일 개학식</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학 시작</td>
-                            <td>2025-12-27 (토)</td>
-                            <td>12월 27일 종업식</td>
-                        </tr>
-                        <tr>
-                            <td>졸업식</td>
-                            <td>2026-01-09 전후</td>
-                            <td>1월 초·중순</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="notes">
-                    <strong>경기도 중학교 공통 패턴:</strong>
-                    <ul>
-                        <li>1학기 개학: 3월 첫 주 (3/3~3/5)</li>
-                        <li>1학기 방학식: 7월 셋째 주 (7/17~7/21)</li>
-                        <li>2학기 개학: 8월 셋째 주 (8/18 전후)</li>
-                        <li>2학기 종업식: 12월 넷째 주 (12/23~12/27)</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- High School -->
-        <section id="high" class="school-section">
-            <div class="school-header high">
-                <span class="school-icon">🎓</span>
-                <h2>고등학교</h2>
-            </div>
-            <div class="school-content high">
-                <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>시기 (대략)</th>
-                            <th>특징</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기</td>
-                            <td>3월 초 ~ 7월 초·중순</td>
-                            <td>4~5월 중간고사, 6월 말~7월 초 기말고사</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학</td>
-                            <td>7월 중순 ~ 8월 말</td>
-                            <td>약 4~6주 (보충수업 여부에 따라 상이)</td>
-                        </tr>
-                        <tr>
-                            <td>2학기</td>
-                            <td>8월 말·9월 초 ~ 12월 말</td>
-                            <td>10월 중간고사, 11~12월 기말고사</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학</td>
-                            <td>12월 말 ~ 다음해 2월</td>
-                            <td>1~2개월 (3학년은 수능 후 조기 종료)</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3 class="section-title">경기 2025학년도 예시</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>예시 날짜 범위</th>
-                            <th>비고</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기 개학</td>
-                            <td>2025-03-03 ~ 03-04</td>
-                            <td>3월 첫 월·화요일</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학 시작</td>
-                            <td>2025-07-15 ~ 07-20</td>
-                            <td>7월 둘째~셋째 주</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>2학기 개학</td>
-                            <td>2025-08-19 ~ 08-26</td>
-                            <td>8월 셋째~넷째 주</td>
-                        </tr>
-                        <tr>
-                            <td>수능</td>
-                            <td>2025-11월 중순</td>
-                            <td>3학년 수능 후 조기 종료</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학 시작</td>
-                            <td>2025-12-20 ~ 12-31</td>
-                            <td>1·2학년 기준</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="notes">
-                    <strong>참고:</strong> 고등학교 3학년은 대학 입시 일정에 따라 11월 수능 이후 학사 일정이 조기 종료될 수 있습니다.
-                </div>
-            </div>
-        </section>
-
-        <!-- University -->
-        <section id="university" class="school-section">
-            <div class="school-header university">
-                <span class="school-icon">🏛️</span>
-                <h2>대학교</h2>
-            </div>
-            <div class="school-content university">
-                <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>시기 (대략)</th>
-                            <th>특징</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기 (봄학기)</td>
-                            <td>3월 초 ~ 6월 중·하순</td>
-                            <td>3월 2~4일 개강, 6월 중·하순 기말고사</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학</td>
-                            <td>6월 중·하순 ~ 8월 말</td>
-                            <td>약 70일 내외 (초중고보다 일찍 시작)</td>
-                        </tr>
-                        <tr>
-                            <td>하계 계절학기</td>
-                            <td>6월 말 ~ 8월 초</td>
-                            <td>선택 수강</td>
-                        </tr>
-                        <tr>
-                            <td>2학기 (가을학기)</td>
-                            <td>9월 초 ~ 12월 말</td>
-                            <td>9월 1일 전후 개강</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학</td>
-                            <td>12월 말 ~ 다음해 2월 말</td>
-                            <td>약 2개월 이상</td>
-                        </tr>
-                        <tr>
-                            <td>동계 계절학기</td>
-                            <td>12월 말 ~ 1월 말</td>
-                            <td>선택 수강</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3 class="section-title">서울/경기 4년제 대학 2025학년도 예시</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>구분</th>
-                            <th>예시 날짜 범위</th>
-                            <th>비고</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1학기 시작 (행정)</td>
-                            <td>2025-03-01 전후</td>
-                            <td>행정상 학기 시작일</td>
-                        </tr>
-                        <tr>
-                            <td>1학기 개강</td>
-                            <td>2025-03-03 ~ 03-04</td>
-                            <td>실제 수업 시작</td>
-                        </tr>
-                        <tr>
-                            <td>1학기 종강</td>
-                            <td>2025-06-16 ~ 06-23</td>
-                            <td>기말고사 후 종강</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>여름방학 시작</td>
-                            <td>2025-06-17 ~ 06-24</td>
-                            <td>종강 직후</td>
-                        </tr>
-                        <tr>
-                            <td>하계 계절학기</td>
-                            <td>2025-06-24 ~ 08-04</td>
-                            <td>약 6주</td>
-                        </tr>
-                        <tr>
-                            <td>2학기 수강신청</td>
-                            <td>2025-08-05 ~ 08-12</td>
-                            <td>8월 초·중순</td>
-                        </tr>
-                        <tr>
-                            <td>2학기 개강</td>
-                            <td>2025-09-01 전후</td>
-                            <td>9월 첫째 주</td>
-                        </tr>
-                        <tr>
-                            <td>2학기 종강</td>
-                            <td>2025-12-12 ~ 12-20</td>
-                            <td>기말고사 후 종강</td>
-                        </tr>
-                        <tr class="highlight">
-                            <td>겨울방학 시작</td>
-                            <td>2025-12-22 전후</td>
-                            <td>12월 말</td>
-                        </tr>
-                        <tr>
-                            <td>동계 계절학기</td>
-                            <td>2025-12-22 ~ 2026-01-23</td>
-                            <td>약 4주</td>
-                        </tr>
-                        <tr>
-                            <td>2학기 종료 (행정)</td>
-                            <td>2026-02-28 전후</td>
-                            <td>행정상 학기 종료</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="univ-example">
-                    <h4>서울대학교 2025학년도 실제 일정</h4>
-                    <div class="univ-timeline">
-                        <div class="univ-timeline-item">
-                            <div class="date">3/4 (화)</div>
-                            <div class="event">1학기 개강</div>
-                        </div>
-                        <div class="univ-timeline-item">
-                            <div class="date">6/16 (월)</div>
-                            <div class="event">1학기 종강</div>
-                        </div>
-                        <div class="univ-timeline-item">
-                            <div class="date">6/24 (화)</div>
-                            <div class="event">하계방학 시작</div>
-                        </div>
-                        <div class="univ-timeline-item">
-                            <div class="date">8/4 (월)</div>
-                            <div class="event">하계 계절학기 종강</div>
-                        </div>
-                        <div class="univ-timeline-item">
-                            <div class="date">9/1 (월)</div>
-                            <div class="event">2학기 개강</div>
-                        </div>
-                        <div class="univ-timeline-item">
-                            <div class="date">12/12 (금)</div>
-                            <div class="event">2학기 종강</div>
-                        </div>
-                        <div class="univ-timeline-item">
-                            <div class="date">12/22 (월)</div>
-                            <div class="event">동계방학 시작</div>
-                        </div>
-                        <div class="univ-timeline-item">
-                            <div class="date">1/23 (금)</div>
-                            <div class="event">동계 계절학기 종강</div>
-                        </div>
+                <div class="overview-grid">
+                    <div class="overview-item">
+                        <div class="period">여름방학</div>
+                        <div class="days">21~35일</div>
+                        <div class="label">8월 중심</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="period">겨울방학</div>
+                        <div class="days">30~60일</div>
+                        <div class="label">1월 중심</div>
+                    </div>
+                    <div class="overview-item">
+                        <div class="period">봄방학</div>
+                        <div class="days">15~20일</div>
+                        <div class="label">2월 중순 (학년말)</div>
                     </div>
                 </div>
-
-                <div class="notes" style="margin-top: 20px;">
-                    <strong>대학교 특징:</strong>
-                    <ul>
-                        <li>초중고보다 여름방학이 일찍 시작 (6월 중순~)</li>
-                        <li>방학 기간 중 계절학기 운영</li>
-                        <li>학교마다 1주 내외 차이 있음</li>
-                    </ul>
-                </div>
             </div>
-        </section>
-    </div>
+
+            <!-- Elementary School -->
+            <section id="elementary" class="school-section fade-in">
+                <div class="school-header elementary">
+                    <span class="school-icon">🏫</span>
+                    <div class="school-header-text">
+                        <h2>초등학교</h2>
+                        <p class="school-header-subtitle">Elementary School</p>
+                    </div>
+                </div>
+                <div class="school-content elementary">
+                    <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>시기 (대략)</th>
+                                    <th>특징</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기</td>
+                                    <td>3월 초 ~ 7월 하순</td>
+                                    <td>3월 초 입학식·시업식, 수업일수 약 95일 내외</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학</td>
+                                    <td>7월 하순 ~ 8월 중·하순</td>
+                                    <td>약 4주 내외</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기</td>
+                                    <td>8월 중·하순 ~ 12월 말</td>
+                                    <td>여름방학 후 개학식</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학</td>
+                                    <td>12월 말 ~ 다음해 2월 말</td>
+                                    <td>1~2개월 내외, 새 학년은 3월 초</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title">서울/경기 2025학년도 예시</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>예시 날짜</th>
+                                    <th>비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기 개학 (입학식)</td>
+                                    <td>2025-03-04 (화)</td>
+                                    <td>수도권 다수 학교 기준</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학 시작</td>
+                                    <td>2025-07-19 ~ 07-25</td>
+                                    <td>7월 셋째~넷째 주</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>2학기 개학</td>
+                                    <td>2025-08-18 ~ 08-25</td>
+                                    <td>약 29일 방학</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학 시작</td>
+                                    <td>2025-12-22 ~ 12-31</td>
+                                    <td>12월 넷째 주</td>
+                                </tr>
+                                <tr>
+                                    <td>새 학년 개학</td>
+                                    <td>2026-03-02 ~ 03-03</td>
+                                    <td>3월 첫 주</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Middle School -->
+            <section id="middle" class="school-section fade-in">
+                <div class="school-header middle">
+                    <span class="school-icon">📚</span>
+                    <div class="school-header-text">
+                        <h2>중학교</h2>
+                        <p class="school-header-subtitle">Middle School</p>
+                    </div>
+                </div>
+                <div class="school-content middle">
+                    <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>시기 (대략)</th>
+                                    <th>특징</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기</td>
+                                    <td>3월 초 ~ 7월 초·중순</td>
+                                    <td>4~5월 중간고사, 6월 기말고사</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학</td>
+                                    <td>7월 중순 ~ 8월 말</td>
+                                    <td>약 30~40일</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기</td>
+                                    <td>8월 말·9월 초 ~ 12월 말</td>
+                                    <td>10월 중간고사, 11~12월 기말고사</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학</td>
+                                    <td>12월 말 ~ 다음해 2월 초·중순</td>
+                                    <td>약 30~40일</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title">경기 2025학년도 예시 (판곡중학교)</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>예시 날짜</th>
+                                    <th>비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기 개학 (입학식)</td>
+                                    <td>2025-03-04 (화)</td>
+                                    <td>1학기 시작</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학 시작</td>
+                                    <td>2025-07-17 (목)</td>
+                                    <td>7월 17일 방학식</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>2학기 개학</td>
+                                    <td>2025-08-18 (월)</td>
+                                    <td>8월 18일 개학식</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학 시작</td>
+                                    <td>2025-12-27 (토)</td>
+                                    <td>12월 27일 종업식</td>
+                                </tr>
+                                <tr>
+                                    <td>졸업식</td>
+                                    <td>2026-01-09 전후</td>
+                                    <td>1월 초·중순</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="notes">
+                        <strong>경기도 중학교 공통 패턴</strong>
+                        <ul>
+                            <li>1학기 개학: 3월 첫 주 (3/3~3/5)</li>
+                            <li>1학기 방학식: 7월 셋째 주 (7/17~7/21)</li>
+                            <li>2학기 개학: 8월 셋째 주 (8/18 전후)</li>
+                            <li>2학기 종업식: 12월 넷째 주 (12/23~12/27)</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- High School -->
+            <section id="high" class="school-section fade-in">
+                <div class="school-header high">
+                    <span class="school-icon">🎓</span>
+                    <div class="school-header-text">
+                        <h2>고등학교</h2>
+                        <p class="school-header-subtitle">High School</p>
+                    </div>
+                </div>
+                <div class="school-content high">
+                    <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>시기 (대략)</th>
+                                    <th>특징</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기</td>
+                                    <td>3월 초 ~ 7월 초·중순</td>
+                                    <td>4~5월 중간고사, 6월 말~7월 초 기말고사</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학</td>
+                                    <td>7월 중순 ~ 8월 말</td>
+                                    <td>약 4~6주 (보충수업 여부에 따라 상이)</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기</td>
+                                    <td>8월 말·9월 초 ~ 12월 말</td>
+                                    <td>10월 중간고사, 11~12월 기말고사</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학</td>
+                                    <td>12월 말 ~ 다음해 2월</td>
+                                    <td>1~2개월 (3학년은 수능 후 조기 종료)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title">경기 2025학년도 예시</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>예시 날짜 범위</th>
+                                    <th>비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기 개학</td>
+                                    <td>2025-03-03 ~ 03-04</td>
+                                    <td>3월 첫 월·화요일</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학 시작</td>
+                                    <td>2025-07-15 ~ 07-20</td>
+                                    <td>7월 둘째~셋째 주</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>2학기 개학</td>
+                                    <td>2025-08-19 ~ 08-26</td>
+                                    <td>8월 셋째~넷째 주</td>
+                                </tr>
+                                <tr>
+                                    <td>수능</td>
+                                    <td>2025-11월 중순</td>
+                                    <td>3학년 수능 후 조기 종료</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학 시작</td>
+                                    <td>2025-12-20 ~ 12-31</td>
+                                    <td>1·2학년 기준</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="notes">
+                        <strong>참고</strong>
+                        고등학교 3학년은 대학 입시 일정에 따라 11월 수능 이후 학사 일정이 조기 종료될 수 있습니다.
+                    </div>
+                </div>
+            </section>
+
+            <!-- University -->
+            <section id="university" class="school-section fade-in">
+                <div class="school-header university">
+                    <span class="school-icon">🏛️</span>
+                    <div class="school-header-text">
+                        <h2>대학교</h2>
+                        <p class="school-header-subtitle">University</p>
+                    </div>
+                </div>
+                <div class="school-content university">
+                    <h3 class="section-title">전형적인 일정 (전국 기준)</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>시기 (대략)</th>
+                                    <th>특징</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기 (봄학기)</td>
+                                    <td>3월 초 ~ 6월 중·하순</td>
+                                    <td>3월 2~4일 개강, 6월 중·하순 기말고사</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학</td>
+                                    <td>6월 중·하순 ~ 8월 말</td>
+                                    <td>약 70일 내외 (초중고보다 일찍 시작)</td>
+                                </tr>
+                                <tr>
+                                    <td>하계 계절학기</td>
+                                    <td>6월 말 ~ 8월 초</td>
+                                    <td>선택 수강</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기 (가을학기)</td>
+                                    <td>9월 초 ~ 12월 말</td>
+                                    <td>9월 1일 전후 개강</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학</td>
+                                    <td>12월 말 ~ 다음해 2월 말</td>
+                                    <td>약 2개월 이상</td>
+                                </tr>
+                                <tr>
+                                    <td>동계 계절학기</td>
+                                    <td>12월 말 ~ 1월 말</td>
+                                    <td>선택 수강</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="section-title">서울/경기 4년제 대학 2025학년도 예시</h3>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>구분</th>
+                                    <th>예시 날짜 범위</th>
+                                    <th>비고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1학기 시작 (행정)</td>
+                                    <td>2025-03-01 전후</td>
+                                    <td>행정상 학기 시작일</td>
+                                </tr>
+                                <tr>
+                                    <td>1학기 개강</td>
+                                    <td>2025-03-03 ~ 03-04</td>
+                                    <td>실제 수업 시작</td>
+                                </tr>
+                                <tr>
+                                    <td>1학기 종강</td>
+                                    <td>2025-06-16 ~ 06-23</td>
+                                    <td>기말고사 후 종강</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>여름방학 시작</td>
+                                    <td>2025-06-17 ~ 06-24</td>
+                                    <td>종강 직후</td>
+                                </tr>
+                                <tr>
+                                    <td>하계 계절학기</td>
+                                    <td>2025-06-24 ~ 08-04</td>
+                                    <td>약 6주</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기 수강신청</td>
+                                    <td>2025-08-05 ~ 08-12</td>
+                                    <td>8월 초·중순</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기 개강</td>
+                                    <td>2025-09-01 전후</td>
+                                    <td>9월 첫째 주</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기 종강</td>
+                                    <td>2025-12-12 ~ 12-20</td>
+                                    <td>기말고사 후 종강</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>겨울방학 시작</td>
+                                    <td>2025-12-22 전후</td>
+                                    <td>12월 말</td>
+                                </tr>
+                                <tr>
+                                    <td>동계 계절학기</td>
+                                    <td>2025-12-22 ~ 2026-01-23</td>
+                                    <td>약 4주</td>
+                                </tr>
+                                <tr>
+                                    <td>2학기 종료 (행정)</td>
+                                    <td>2026-02-28 전후</td>
+                                    <td>행정상 학기 종료</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="univ-example">
+                        <h4>서울대학교 2025학년도 실제 일정</h4>
+                        <div class="univ-timeline">
+                            <div class="univ-timeline-item">
+                                <div class="date">3/4 (화)</div>
+                                <div class="event">1학기 개강</div>
+                            </div>
+                            <div class="univ-timeline-item">
+                                <div class="date">6/16 (월)</div>
+                                <div class="event">1학기 종강</div>
+                            </div>
+                            <div class="univ-timeline-item">
+                                <div class="date">6/24 (화)</div>
+                                <div class="event">하계방학 시작</div>
+                            </div>
+                            <div class="univ-timeline-item">
+                                <div class="date">8/4 (월)</div>
+                                <div class="event">하계 계절학기 종강</div>
+                            </div>
+                            <div class="univ-timeline-item">
+                                <div class="date">9/1 (월)</div>
+                                <div class="event">2학기 개강</div>
+                            </div>
+                            <div class="univ-timeline-item">
+                                <div class="date">12/12 (금)</div>
+                                <div class="event">2학기 종강</div>
+                            </div>
+                            <div class="univ-timeline-item">
+                                <div class="date">12/22 (월)</div>
+                                <div class="event">동계방학 시작</div>
+                            </div>
+                            <div class="univ-timeline-item">
+                                <div class="date">1/23 (금)</div>
+                                <div class="event">동계 계절학기 종강</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="notes" style="margin-top: 28px;">
+                        <strong>대학교 특징</strong>
+                        <ul>
+                            <li>초중고보다 여름방학이 일찍 시작 (6월 중순~)</li>
+                            <li>방학 기간 중 계절학기 운영</li>
+                            <li>학교마다 1주 내외 차이 있음</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 
     <footer>
-        <p><strong>※ 주의:</strong> 실제 날짜는 각 학교 학사일정을 반드시 확인하세요</p>
-        <p>교육부 지침: 연간 수업일수 약 190일 전후</p>
-        <p style="margin-top: 16px;">
-            <a href="planner.html">프로그램 기획 캘린더로 이동 →</a>
-        </p>
+        <div class="footer-content">
+            <p><strong>※ 주의:</strong> 실제 날짜는 각 학교 학사일정을 반드시 확인하세요</p>
+            <p>교육부 지침: 연간 수업일수 약 190일 전후</p>
+            <nav class="footer-nav">
+                <a href="planner.html">일정 요약</a>
+                <a href="planner-2026.html">2026 캘린더</a>
+                <a href="markdown-export.html">마크다운 복사</a>
+            </nav>
+        </div>
     </footer>
+
+    <script>
+        // Scroll animation for fade-in elements
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Sticky nav shadow on scroll
+        const sectionNav = document.getElementById('sectionNav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                sectionNav.classList.add('scrolled');
+            } else {
+                sectionNav.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
