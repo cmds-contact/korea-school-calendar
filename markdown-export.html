@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학사일정 마크다운 복사</title>
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-light: #dbeafe;
+            --elementary: #22c55e;
+            --elementary-light: #dcfce7;
+            --middle: #3b82f6;
+            --middle-light: #dbeafe;
+            --high: #8b5cf6;
+            --high-light: #ede9fe;
+            --university: #f97316;
+            --university-light: #ffedd5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header .subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Settings Card */
+        .settings-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .settings-card h2 {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-bottom: 16px;
+        }
+
+        .settings-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .settings-label {
+            font-weight: 600;
+            color: #334155;
+            min-width: 80px;
+        }
+
+        /* Checkboxes */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-item.elementary { background: var(--elementary-light); color: var(--elementary); }
+        .checkbox-item.middle { background: var(--middle-light); color: var(--middle); }
+        .checkbox-item.high { background: var(--high-light); color: var(--high); }
+        .checkbox-item.university { background: var(--university-light); color: var(--university); }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-item.unchecked {
+            opacity: 0.4;
+        }
+
+        /* Select */
+        .year-select {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            background: #fff;
+            color: #334155;
+            cursor: pointer;
+            min-width: 160px;
+        }
+
+        .year-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Preview Card */
+        .preview-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .preview-header {
+            background: #1e293b;
+            color: #fff;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .preview-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #fff;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .preview-content {
+            padding: 20px 24px;
+            background: #f8fafc;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .markdown-preview {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #334155;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #3b82f6;
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.4rem;
+            }
+            .settings-card {
+                padding: 16px;
+            }
+            .preview-content {
+                padding: 16px;
+            }
+            .markdown-preview {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>학사일정 마크다운 복사</h1>
+        <p class="subtitle">학교급별 학기/방학 정보를 마크다운으로 복사하세요</p>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">상세 일정</a>
+            <a href="planner.html" class="nav-link">2025 캘린더</a>
+            <a href="planner-2026.html" class="nav-link">2026 캘린더</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Settings -->
+        <div class="settings-card">
+            <h2>설정</h2>
+
+            <div class="settings-row">
+                <span class="settings-label">연도 선택</span>
+                <select class="year-select" id="yearSelect" onchange="updatePreview()">
+                    <option value="2025">2025학년도</option>
+                    <option value="2026" selected>2026년</option>
+                </select>
+            </div>
+
+            <div class="settings-row">
+                <span class="settings-label">학교급</span>
+                <div class="checkbox-group">
+                    <label class="checkbox-item elementary">
+                        <input type="checkbox" checked onchange="updatePreview()">
+                        <span>초등학교</span>
+                    </label>
+                    <label class="checkbox-item middle">
+                        <input type="checkbox" checked onchange="updatePreview()">
+                        <span>중학교</span>
+                    </label>
+                    <label class="checkbox-item high">
+                        <input type="checkbox" checked onchange="updatePreview()">
+                        <span>고등학교</span>
+                    </label>
+                    <label class="checkbox-item university">
+                        <input type="checkbox" checked onchange="updatePreview()">
+                        <span>대학교</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Preview -->
+        <div class="preview-card">
+            <div class="preview-header">
+                <h3>마크다운 미리보기</h3>
+                <button class="copy-btn" onclick="copyToClipboard()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span id="copyBtnText">복사하기</span>
+                </button>
+            </div>
+            <div class="preview-content">
+                <pre class="markdown-preview" id="markdownPreview"></pre>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>실제 날짜는 각 학교 학사일정을 반드시 확인하세요</p>
+        <p style="margin-top: 8px;">
+            <a href="index.html">상세 정보</a> |
+            <a href="planner.html">2025 캘린더</a> |
+            <a href="planner-2026.html">2026 캘린더</a>
+        </p>
+    </footer>
+
+    <script>
+        // 학사일정 데이터
+        const scheduleData = {
+            // 2025학년도 (index.html 기반)
+            2025: {
+                elementary: {
+                    name: '초등학교',
+                    emoji: '🏫',
+                    semesters: [
+                        { name: '1학기', period: '3월 초 ~ 7월 하순', note: '3월 초 입학식·시업식' },
+                        { name: '2학기', period: '8월 중·하순 ~ 12월 말', note: '여름방학 후 개학식' }
+                    ],
+                    vacations: [
+                        { name: '여름방학', period: '7/19 ~ 8/17', days: '약 30일' },
+                        { name: '겨울방학', period: '12/22 ~ 2/28', days: '약 60일' }
+                    ]
+                },
+                middle: {
+                    name: '중학교',
+                    emoji: '📚',
+                    semesters: [
+                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 기말고사' },
+                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '10월 중간고사, 11~12월 기말고사' }
+                    ],
+                    vacations: [
+                        { name: '여름방학', period: '7/17 ~ 8/17', days: '약 32일' },
+                        { name: '겨울방학', period: '12/27 ~ 2/28', days: '약 60일' }
+                    ]
+                },
+                high: {
+                    name: '고등학교',
+                    emoji: '🎓',
+                    semesters: [
+                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 말~7월 초 기말고사' },
+                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '10월 중간고사, 11~12월 기말고사' }
+                    ],
+                    vacations: [
+                        { name: '여름방학', period: '7/15 ~ 8/19', days: '약 36일' },
+                        { name: '겨울방학', period: '12/20 ~ 2/28', days: '약 70일' }
+                    ],
+                    note: '3학년은 수능 후 조기 종료'
+                },
+                university: {
+                    name: '대학교',
+                    emoji: '🏛️',
+                    semesters: [
+                        { name: '1학기 (봄학기)', period: '3월 초 ~ 6월 중순', note: '기말고사 후 종강' },
+                        { name: '2학기 (가을학기)', period: '9월 초 ~ 12월 중순', note: '기말고사 후 종강' }
+                    ],
+                    vacations: [
+                        { name: '여름방학', period: '6/17 ~ 8/31', days: '약 75일' },
+                        { name: '겨울방학', period: '12/22 ~ 2/28', days: '약 68일' }
+                    ],
+                    note: '계절학기 별도 운영'
+                }
+            },
+            // 2026년 (planner-2026.html 기반)
+            2026: {
+                elementary: {
+                    name: '초등학교',
+                    emoji: '🏫',
+                    semesters: [
+                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '3월 초 입학식·시업식' },
+                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '여름방학 후 개학식' }
+                    ],
+                    vacations: [
+                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
+                        { name: '여름방학', period: '7/19 ~ 8/17', days: '약 30일' },
+                        { name: '겨울방학', period: '12/22 ~ 12/31', days: '약 10일+' }
+                    ]
+                },
+                middle: {
+                    name: '중학교',
+                    emoji: '📚',
+                    semesters: [
+                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 기말고사' },
+                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '10월 중간고사, 11~12월 기말고사' }
+                    ],
+                    vacations: [
+                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
+                        { name: '여름방학', period: '7/17 ~ 8/17', days: '약 32일' },
+                        { name: '겨울방학', period: '12/27 ~ 12/31', days: '약 5일+' }
+                    ]
+                },
+                high: {
+                    name: '고등학교',
+                    emoji: '🎓',
+                    semesters: [
+                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 말~7월 초 기말고사' },
+                        { name: '2학기', period: '8월 중순 ~ 12월 중순', note: '10월 중간고사, 11~12월 기말고사' }
+                    ],
+                    vacations: [
+                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
+                        { name: '여름방학', period: '7/15 ~ 8/18', days: '약 35일' },
+                        { name: '겨울방학', period: '12/20 ~ 12/31', days: '약 12일+' }
+                    ],
+                    note: '3학년은 수능 후 조기 종료'
+                },
+                university: {
+                    name: '대학교',
+                    emoji: '🏛️',
+                    semesters: [
+                        { name: '1학기 (봄학기)', period: '3월 초 ~ 6월 중순', note: '기말고사 후 종강' },
+                        { name: '2학기 (가을학기)', period: '9월 초 ~ 12월 중순', note: '기말고사 후 종강' }
+                    ],
+                    vacations: [
+                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
+                        { name: '여름방학', period: '6/20 ~ 8/31', days: '약 73일' },
+                        { name: '겨울방학', period: '12/20 ~ 12/31', days: '약 12일+' }
+                    ],
+                    note: '계절학기 별도 운영'
+                }
+            }
+        };
+
+        // 선택된 학교급 가져오기
+        function getSelectedSchools() {
+            const schools = [];
+            const checkboxes = document.querySelectorAll('.checkbox-item input');
+            const schoolTypes = ['elementary', 'middle', 'high', 'university'];
+
+            checkboxes.forEach((checkbox, index) => {
+                const label = checkbox.closest('.checkbox-item');
+                if (checkbox.checked) {
+                    schools.push(schoolTypes[index]);
+                    label.classList.remove('unchecked');
+                } else {
+                    label.classList.add('unchecked');
+                }
+            });
+
+            return schools;
+        }
+
+        // 마크다운 생성
+        function generateMarkdown() {
+            const year = document.getElementById('yearSelect').value;
+            const schools = getSelectedSchools();
+            const data = scheduleData[year];
+
+            if (schools.length === 0) {
+                return '';
+            }
+
+            let markdown = `# ${year}${year === '2025' ? '학년도' : '년'} 한국 학교 학사일정\n\n`;
+            markdown += `> 서울/경기 기준, 실제 날짜는 각 학교 학사일정 확인 필요\n\n`;
+
+            schools.forEach((schoolType, index) => {
+                const school = data[schoolType];
+
+                markdown += `## ${school.emoji} ${school.name}\n\n`;
+
+                // 학기 정보
+                markdown += `### 학기\n\n`;
+                markdown += `| 구분 | 기간 | 비고 |\n`;
+                markdown += `|------|------|------|\n`;
+                school.semesters.forEach(sem => {
+                    markdown += `| ${sem.name} | ${sem.period} | ${sem.note} |\n`;
+                });
+                markdown += `\n`;
+
+                // 방학 정보
+                markdown += `### 방학\n\n`;
+                markdown += `| 구분 | 기간 | 일수 |\n`;
+                markdown += `|------|------|------|\n`;
+                school.vacations.forEach(vac => {
+                    markdown += `| ${vac.name} | ${vac.period} | ${vac.days} |\n`;
+                });
+
+                // 추가 참고사항
+                if (school.note) {
+                    markdown += `\n**참고:** ${school.note}\n`;
+                }
+
+                if (index < schools.length - 1) {
+                    markdown += `\n---\n\n`;
+                }
+            });
+
+            return markdown;
+        }
+
+        // 미리보기 업데이트
+        function updatePreview() {
+            const preview = document.getElementById('markdownPreview');
+            const markdown = generateMarkdown();
+
+            if (markdown) {
+                preview.textContent = markdown;
+            } else {
+                preview.innerHTML = `<div class="empty-state">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <p>학교급을 선택하세요</p>
+                </div>`;
+            }
+        }
+
+        // 클립보드에 복사
+        async function copyToClipboard() {
+            const markdown = generateMarkdown();
+
+            if (!markdown) {
+                alert('복사할 내용이 없습니다. 학교급을 선택해주세요.');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(markdown);
+
+                // 복사 완료 피드백
+                const btn = document.querySelector('.copy-btn');
+                const btnText = document.getElementById('copyBtnText');
+
+                btn.classList.add('copied');
+                btnText.textContent = '복사 완료!';
+
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btnText.textContent = '복사하기';
+                }, 2000);
+            } catch (err) {
+                // 폴백: 구버전 브라우저 지원
+                const textarea = document.createElement('textarea');
+                textarea.value = markdown;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+
+                alert('클립보드에 복사되었습니다!');
+            }
+        }
+
+        // 초기화
+        updatePreview();
+    </script>
+</body>
+</html>
