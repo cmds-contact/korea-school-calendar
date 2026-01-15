@@ -530,7 +530,7 @@
         <div class="hero-content">
             <span class="hero-badge">2026년</span>
             <h1>2026년 교육 프로그램 기획 캘린더</h1>
-            <p class="subtitle">달력 연도 2026년 (1월~12월) 기준 | 방학 기간 한눈에 보기</p>
+            <p class="subtitle">2025년 12월 ~ 2027년 3월 | 방학 기간 한눈에 보기</p>
         </div>
         <nav class="site-nav">
             <div class="nav-container">
@@ -609,40 +609,60 @@
     </footer>
 
     <script>
-        // 2026년 학사일정 데이터 (학교급별 분리)
-        const schedule2026 = {
+        // 학사일정 데이터 (2025년 12월 ~ 2027년 3월)
+        const scheduleData = {
             elementary: {
                 vacation: [
+                    // 2025년 겨울방학 시작
+                    { start: new Date(2025, 11, 22), end: new Date(2025, 11, 31) },
+                    // 2026년
                     { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },
                     { start: new Date(2026, 6, 19), end: new Date(2026, 7, 17) },
-                    { start: new Date(2026, 11, 22), end: new Date(2026, 11, 31) }
+                    { start: new Date(2026, 11, 22), end: new Date(2026, 11, 31) },
+                    // 2027년 겨울방학 끝
+                    { start: new Date(2027, 0, 1), end: new Date(2027, 1, 28) }
                 ]
             },
             middle: {
                 vacation: [
+                    // 2025년 겨울방학 시작
+                    { start: new Date(2025, 11, 27), end: new Date(2025, 11, 31) },
+                    // 2026년
                     { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },
                     { start: new Date(2026, 6, 17), end: new Date(2026, 7, 17) },
-                    { start: new Date(2026, 11, 27), end: new Date(2026, 11, 31) }
+                    { start: new Date(2026, 11, 27), end: new Date(2026, 11, 31) },
+                    // 2027년 겨울방학 끝
+                    { start: new Date(2027, 0, 1), end: new Date(2027, 1, 28) }
                 ]
             },
             high: {
                 vacation: [
+                    // 2025년 겨울방학 시작
+                    { start: new Date(2025, 11, 20), end: new Date(2025, 11, 31) },
+                    // 2026년
                     { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },
                     { start: new Date(2026, 6, 15), end: new Date(2026, 7, 18) },
-                    { start: new Date(2026, 11, 20), end: new Date(2026, 11, 31) }
+                    { start: new Date(2026, 11, 20), end: new Date(2026, 11, 31) },
+                    // 2027년 겨울방학 끝
+                    { start: new Date(2027, 0, 1), end: new Date(2027, 1, 28) }
                 ]
             },
             university: {
                 vacation: [
+                    // 2025년 겨울방학 시작
+                    { start: new Date(2025, 11, 20), end: new Date(2025, 11, 31) },
+                    // 2026년
                     { start: new Date(2026, 0, 1), end: new Date(2026, 1, 28) },
                     { start: new Date(2026, 5, 20), end: new Date(2026, 7, 31) },
-                    { start: new Date(2026, 11, 20), end: new Date(2026, 11, 31) }
+                    { start: new Date(2026, 11, 20), end: new Date(2026, 11, 31) },
+                    // 2027년 겨울방학 끝
+                    { start: new Date(2027, 0, 1), end: new Date(2027, 1, 28) }
                 ]
             }
         };
 
         function isVacation(date, schoolType) {
-            const vacations = schedule2026[schoolType].vacation;
+            const vacations = scheduleData[schoolType].vacation;
             return vacations.some(v => date >= v.start && date <= v.end);
         }
 
@@ -685,18 +705,38 @@
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
-            const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+            const monthNames = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
             const weekdayNames = ['일', '월', '화', '수', '목', '금', '토'];
             const schoolTypes = ['elementary', 'middle', 'high', 'university'];
 
-            for (let month = 0; month < 12; month++) {
+            // 2025년 12월 ~ 2027년 3월 (총 16개월)
+            const calendarMonths = [
+                { year: 2025, month: 11 },  // 2025년 12월
+                { year: 2026, month: 0 },   // 2026년 1월
+                { year: 2026, month: 1 },   // 2026년 2월
+                { year: 2026, month: 2 },   // 2026년 3월
+                { year: 2026, month: 3 },   // 2026년 4월
+                { year: 2026, month: 4 },   // 2026년 5월
+                { year: 2026, month: 5 },   // 2026년 6월
+                { year: 2026, month: 6 },   // 2026년 7월
+                { year: 2026, month: 7 },   // 2026년 8월
+                { year: 2026, month: 8 },   // 2026년 9월
+                { year: 2026, month: 9 },   // 2026년 10월
+                { year: 2026, month: 10 },  // 2026년 11월
+                { year: 2026, month: 11 },  // 2026년 12월
+                { year: 2027, month: 0 },   // 2027년 1월
+                { year: 2027, month: 1 },   // 2027년 2월
+                { year: 2027, month: 2 }    // 2027년 3월
+            ];
+
+            calendarMonths.forEach(({ year, month }) => {
                 const monthCard = document.createElement('div');
                 monthCard.className = 'month-card';
 
-                // 월 타이틀
+                // 월 타이틀 (연도 포함)
                 const title = document.createElement('div');
                 title.className = 'month-title';
-                title.textContent = months[month];
+                title.textContent = `${year}년 ${monthNames[month]}`;
                 monthCard.appendChild(title);
 
                 // 요일 헤더
@@ -713,7 +753,7 @@
                 const calendarBody = document.createElement('div');
                 calendarBody.className = 'calendar-body';
 
-                const weeks = getWeeksInMonth(2026, month);
+                const weeks = getWeeksInMonth(year, month);
 
                 weeks.forEach((week, weekIndex) => {
                     const weekRow = document.createElement('div');
@@ -734,7 +774,7 @@
                             const barCell = document.createElement('div');
 
                             if (day !== null) {
-                                const date = new Date(2026, month, day);
+                                const date = new Date(year, month, day);
                                 const isVac = isVacation(date, school);
 
                                 if (isVac) {
@@ -762,7 +802,7 @@
                         if (day === null) {
                             dayCell.className = 'day-cell empty';
                         } else {
-                            const date = new Date(2026, month, day);
+                            const date = new Date(year, month, day);
                             dayCell.className = 'day-cell';
                             dayCell.dataset.date = date.toISOString().split('T')[0];
                             dayCell.textContent = day;
@@ -792,7 +832,7 @@
 
                 monthCard.appendChild(calendarBody);
                 grid.appendChild(monthCard);
-            }
+            });
         }
 
         function toggleSchool(schoolType, isChecked) {
