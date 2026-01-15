@@ -334,81 +334,89 @@
         .weekdays span:first-child { color: #dc2626; }
         .weekdays span:last-child { color: var(--middle); }
 
-        .days {
+        .calendar-body {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .week-row {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-lanes {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding: 2px 0;
+            min-height: 4px;
+        }
+
+        .event-lane {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            height: 5px;
+        }
+
+        .event-bar {
+            height: 5px;
+            border-radius: 2px;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .event-bar:hover {
+            transform: scaleY(1.4);
+        }
+
+        .event-bar.elementary { background: var(--elementary); }
+        .event-bar.middle { background: var(--middle); }
+        .event-bar.high { background: var(--high); }
+        .event-bar.university { background: var(--university); }
+
+        .event-bar.hidden { display: none; }
+
+        .day-cells {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 3px;
         }
 
-        .day {
+        .day-cell {
             aspect-ratio: 1;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding-top: 5px;
+            justify-content: center;
             font-size: 0.78rem;
             font-weight: 500;
             border-radius: 6px;
-            position: relative;
-            min-height: 38px;
+            min-height: 28px;
             transition: all 0.2s ease;
         }
 
-        .day:hover:not(.empty) {
+        .day-cell:hover:not(.empty) {
             transform: scale(1.05);
             z-index: 10;
         }
 
-        .day.empty {
+        .day-cell.empty {
             background: transparent;
         }
 
-        .day.semester {
+        .day-cell.semester {
             background: var(--semester-bg);
             color: var(--ink-muted);
         }
 
-        .day.vacation {
+        .day-cell.vacation {
             background: var(--paper);
             color: var(--ink);
         }
 
-        .day.sunday .day-num { color: #dc2626; font-weight: 700; }
-        .day.saturday .day-num { color: var(--middle); font-weight: 600; }
-
-        .day-num {
-            font-size: 0.75rem;
-            line-height: 1;
-            margin-bottom: 3px;
-        }
-
-        .markers {
-            display: flex;
-            gap: 2px;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 100%;
-        }
-
-        .marker {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-            transition: transform 0.2s ease;
-        }
-
-        .day:hover .marker {
-            transform: scale(1.2);
-        }
-
-        .marker.elementary { background: var(--elementary); }
-        .marker.middle { background: var(--middle); }
-        .marker.high { background: var(--high); }
-        .marker.university { background: var(--university); }
-
-        .marker.hidden { display: none; }
+        .day-cell.sunday { color: #dc2626; font-weight: 700; }
+        .day-cell.saturday { color: var(--middle); font-weight: 600; }
 
         /* ========================================
            LEGEND
@@ -444,16 +452,16 @@
             border-radius: 4px;
         }
 
-        .legend-vacation {
-            display: flex;
-            gap: 4px;
-            align-items: center;
+        .legend-bar {
+            width: 40px;
+            height: 6px;
+            border-radius: 3px;
         }
 
-        .legend-vacation .marker {
-            width: 10px;
-            height: 10px;
-        }
+        .legend-bar.elementary { background: var(--elementary); }
+        .legend-bar.middle { background: var(--middle); }
+        .legend-bar.high { background: var(--high); }
+        .legend-bar.university { background: var(--university); }
 
         /* ========================================
            FOOTER
@@ -572,13 +580,20 @@
                         <span>학기 중</span>
                     </div>
                     <div class="legend-item">
-                        <div class="legend-vacation">
-                            <div class="marker elementary"></div>
-                            <div class="marker middle"></div>
-                            <div class="marker high"></div>
-                            <div class="marker university"></div>
-                        </div>
-                        <span>방학 (초/중/고/대)</span>
+                        <div class="legend-bar elementary"></div>
+                        <span>초등 방학</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-bar middle"></div>
+                        <span>중학 방학</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-bar high"></div>
+                        <span>고등 방학</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-bar university"></div>
+                        <span>대학 방학</span>
                     </div>
                 </div>
             </div>
@@ -631,89 +646,151 @@
             return vacations.some(v => date >= v.start && date <= v.end);
         }
 
+        // 해당 월의 모든 주를 구함
+        function getWeeksInMonth(year, month) {
+            const weeks = [];
+            const firstDay = new Date(year, month, 1);
+            const lastDate = new Date(year, month + 1, 0).getDate();
+
+            let currentWeek = [];
+
+            // 첫 주의 빈 칸 채우기
+            const firstDayOfWeek = firstDay.getDay();
+            for (let i = 0; i < firstDayOfWeek; i++) {
+                currentWeek.push(null);
+            }
+
+            // 날짜 채우기
+            for (let day = 1; day <= lastDate; day++) {
+                currentWeek.push(day);
+
+                if (currentWeek.length === 7) {
+                    weeks.push(currentWeek);
+                    currentWeek = [];
+                }
+            }
+
+            // 마지막 주 빈 칸 채우기
+            if (currentWeek.length > 0) {
+                while (currentWeek.length < 7) {
+                    currentWeek.push(null);
+                }
+                weeks.push(currentWeek);
+            }
+
+            return weeks;
+        }
+
         function generateCalendar() {
             const grid = document.getElementById('calendarGrid');
             grid.innerHTML = '';
 
             const months = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
-            const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
+            const weekdayNames = ['일', '월', '화', '수', '목', '금', '토'];
+            const schoolTypes = ['elementary', 'middle', 'high', 'university'];
 
             for (let month = 0; month < 12; month++) {
                 const monthCard = document.createElement('div');
                 monthCard.className = 'month-card';
 
+                // 월 타이틀
                 const title = document.createElement('div');
                 title.className = 'month-title';
                 title.textContent = months[month];
                 monthCard.appendChild(title);
 
+                // 요일 헤더
                 const weekdaysDiv = document.createElement('div');
                 weekdaysDiv.className = 'weekdays';
-                weekdays.forEach(day => {
+                weekdayNames.forEach(day => {
                     const span = document.createElement('span');
                     span.textContent = day;
                     weekdaysDiv.appendChild(span);
                 });
                 monthCard.appendChild(weekdaysDiv);
 
-                const daysDiv = document.createElement('div');
-                daysDiv.className = 'days';
+                // 캘린더 바디 (주 단위)
+                const calendarBody = document.createElement('div');
+                calendarBody.className = 'calendar-body';
 
-                const firstDay = new Date(2026, month, 1).getDay();
-                const lastDate = new Date(2026, month + 1, 0).getDate();
+                const weeks = getWeeksInMonth(2026, month);
 
-                for (let i = 0; i < firstDay; i++) {
-                    const emptyDay = document.createElement('div');
-                    emptyDay.className = 'day empty';
-                    daysDiv.appendChild(emptyDay);
-                }
+                weeks.forEach((week, weekIndex) => {
+                    const weekRow = document.createElement('div');
+                    weekRow.className = 'week-row';
 
-                for (let day = 1; day <= lastDate; day++) {
-                    const date = new Date(2026, month, day);
-                    const dayOfWeek = date.getDay();
+                    // 이벤트 레인 영역
+                    const eventLanes = document.createElement('div');
+                    eventLanes.className = 'event-lanes';
 
-                    const dayDiv = document.createElement('div');
-                    dayDiv.className = 'day';
-                    dayDiv.dataset.date = date.toISOString().split('T')[0];
-
-                    if (dayOfWeek === 0) dayDiv.classList.add('sunday');
-                    if (dayOfWeek === 6) dayDiv.classList.add('saturday');
-
-                    const dayNum = document.createElement('span');
-                    dayNum.className = 'day-num';
-                    dayNum.textContent = day;
-                    dayDiv.appendChild(dayNum);
-
-                    const markers = document.createElement('div');
-                    markers.className = 'markers';
-
-                    const schoolTypes = ['elementary', 'middle', 'high', 'university'];
-                    let hasVacation = false;
-
+                    // 각 학교급별 이벤트 레인
                     schoolTypes.forEach(school => {
-                        const isVac = isVacation(date, school);
-                        if (isVac) hasVacation = true;
+                        const lane = document.createElement('div');
+                        lane.className = 'event-lane';
+                        lane.dataset.school = school;
 
-                        const marker = document.createElement('div');
-                        marker.className = `marker ${school}`;
-                        marker.dataset.school = school;
-                        marker.dataset.vacation = isVac ? 'true' : 'false';
-                        if (!isVac) marker.classList.add('hidden');
-                        markers.appendChild(marker);
+                        // 7일 각각에 대해 바 또는 빈 칸 생성
+                        week.forEach((day, dayIndex) => {
+                            const barCell = document.createElement('div');
+
+                            if (day !== null) {
+                                const date = new Date(2026, month, day);
+                                const isVac = isVacation(date, school);
+
+                                if (isVac) {
+                                    barCell.className = `event-bar ${school}`;
+                                    barCell.dataset.school = school;
+                                    barCell.dataset.date = date.toISOString().split('T')[0];
+                                }
+                            }
+
+                            lane.appendChild(barCell);
+                        });
+
+                        eventLanes.appendChild(lane);
                     });
 
-                    dayDiv.appendChild(markers);
+                    weekRow.appendChild(eventLanes);
 
-                    if (hasVacation) {
-                        dayDiv.classList.add('vacation');
-                    } else {
-                        dayDiv.classList.add('semester');
-                    }
+                    // 날짜 셀 영역
+                    const dayCells = document.createElement('div');
+                    dayCells.className = 'day-cells';
 
-                    daysDiv.appendChild(dayDiv);
-                }
+                    week.forEach((day, dayIndex) => {
+                        const dayCell = document.createElement('div');
 
-                monthCard.appendChild(daysDiv);
+                        if (day === null) {
+                            dayCell.className = 'day-cell empty';
+                        } else {
+                            const date = new Date(2026, month, day);
+                            dayCell.className = 'day-cell';
+                            dayCell.dataset.date = date.toISOString().split('T')[0];
+                            dayCell.textContent = day;
+
+                            if (dayIndex === 0) dayCell.classList.add('sunday');
+                            if (dayIndex === 6) dayCell.classList.add('saturday');
+
+                            // 방학 여부 확인
+                            let hasVacation = false;
+                            schoolTypes.forEach(school => {
+                                if (isVacation(date, school)) hasVacation = true;
+                            });
+
+                            if (hasVacation) {
+                                dayCell.classList.add('vacation');
+                            } else {
+                                dayCell.classList.add('semester');
+                            }
+                        }
+
+                        dayCells.appendChild(dayCell);
+                    });
+
+                    weekRow.appendChild(dayCells);
+                    calendarBody.appendChild(weekRow);
+                });
+
+                monthCard.appendChild(calendarBody);
                 grid.appendChild(monthCard);
             }
         }
@@ -726,13 +803,21 @@
                 label.classList.add('unchecked');
             }
 
-            document.querySelectorAll(`.marker[data-school="${schoolType}"]`).forEach(marker => {
-                if (marker.dataset.vacation === 'true') {
-                    if (isChecked) {
-                        marker.classList.remove('hidden');
-                    } else {
-                        marker.classList.add('hidden');
-                    }
+            // 이벤트 바 표시/숨김
+            document.querySelectorAll(`.event-bar[data-school="${schoolType}"]`).forEach(bar => {
+                if (isChecked) {
+                    bar.classList.remove('hidden');
+                } else {
+                    bar.classList.add('hidden');
+                }
+            });
+
+            // 이벤트 레인 표시/숨김
+            document.querySelectorAll(`.event-lane[data-school="${schoolType}"]`).forEach(lane => {
+                if (isChecked) {
+                    lane.style.display = '';
+                } else {
+                    lane.style.display = 'none';
                 }
             });
 
@@ -745,18 +830,20 @@
                 checkedSchools.push(input.closest('.checkbox-item').dataset.target);
             });
 
-            document.querySelectorAll('.day[data-date]').forEach(dayDiv => {
+            document.querySelectorAll('.day-cell[data-date]').forEach(dayCell => {
+                const dateStr = dayCell.dataset.date;
+                const date = new Date(dateStr);
+
                 const hasActiveVacation = checkedSchools.some(school => {
-                    const marker = dayDiv.querySelector(`.marker[data-school="${school}"]`);
-                    return marker && marker.dataset.vacation === 'true';
+                    return isVacation(date, school);
                 });
 
                 if (hasActiveVacation) {
-                    dayDiv.classList.remove('semester');
-                    dayDiv.classList.add('vacation');
+                    dayCell.classList.remove('semester');
+                    dayCell.classList.add('vacation');
                 } else {
-                    dayDiv.classList.remove('vacation');
-                    dayDiv.classList.add('semester');
+                    dayCell.classList.remove('vacation');
+                    dayCell.classList.add('semester');
                 }
             });
         }
