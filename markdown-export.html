@@ -537,6 +537,7 @@
     </style>
 </head>
 <body>
+    <script src="js/schedule-dates.js"></script>
     <header class="hero">
         <div class="hero-content">
             <span class="hero-badge">Markdown Export</span>
@@ -628,117 +629,7 @@
     </footer>
 
     <script>
-        // 학사일정 데이터
-        const scheduleData = {
-            2025: {
-                elementary: {
-                    name: '초등학교',
-                    emoji: '🏫',
-                    semesters: [
-                        { name: '1학기', period: '3월 초 ~ 7월 하순', note: '3월 초 입학식·시업식' },
-                        { name: '2학기', period: '8월 중·하순 ~ 12월 말', note: '여름방학 후 개학식' }
-                    ],
-                    vacations: [
-                        { name: '여름방학', period: '7/19 ~ 8/17', days: '약 30일' },
-                        { name: '겨울방학', period: '12/22 ~ 2/28', days: '약 60일' }
-                    ]
-                },
-                middle: {
-                    name: '중학교',
-                    emoji: '📚',
-                    semesters: [
-                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 기말고사' },
-                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '10월 중간고사, 11~12월 기말고사' }
-                    ],
-                    vacations: [
-                        { name: '여름방학', period: '7/17 ~ 8/17', days: '약 32일' },
-                        { name: '겨울방학', period: '12/27 ~ 2/28', days: '약 60일' }
-                    ]
-                },
-                high: {
-                    name: '고등학교',
-                    emoji: '🎓',
-                    semesters: [
-                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 말~7월 초 기말고사' },
-                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '10월 중간고사, 11~12월 기말고사' }
-                    ],
-                    vacations: [
-                        { name: '여름방학', period: '7/15 ~ 8/19', days: '약 36일' },
-                        { name: '겨울방학', period: '12/20 ~ 2/28', days: '약 70일' }
-                    ],
-                    note: '3학년은 수능 후 조기 종료'
-                },
-                university: {
-                    name: '대학교',
-                    emoji: '🏛️',
-                    semesters: [
-                        { name: '1학기 (봄학기)', period: '3월 초 ~ 6월 중순', note: '기말고사 후 종강' },
-                        { name: '2학기 (가을학기)', period: '9월 초 ~ 12월 중순', note: '기말고사 후 종강' }
-                    ],
-                    vacations: [
-                        { name: '여름방학', period: '6/17 ~ 8/31', days: '약 75일' },
-                        { name: '겨울방학', period: '12/22 ~ 2/28', days: '약 68일' }
-                    ],
-                    note: '계절학기 별도 운영'
-                }
-            },
-            2026: {
-                elementary: {
-                    name: '초등학교',
-                    emoji: '🏫',
-                    semesters: [
-                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '3월 초 입학식·시업식' },
-                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '여름방학 후 개학식' }
-                    ],
-                    vacations: [
-                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
-                        { name: '여름방학', period: '7/19 ~ 8/17', days: '약 30일' },
-                        { name: '겨울방학', period: '12/22 ~ 12/31', days: '약 10일+' }
-                    ]
-                },
-                middle: {
-                    name: '중학교',
-                    emoji: '📚',
-                    semesters: [
-                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 기말고사' },
-                        { name: '2학기', period: '8월 중순 ~ 12월 말', note: '10월 중간고사, 11~12월 기말고사' }
-                    ],
-                    vacations: [
-                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
-                        { name: '여름방학', period: '7/17 ~ 8/17', days: '약 32일' },
-                        { name: '겨울방학', period: '12/27 ~ 12/31', days: '약 5일+' }
-                    ]
-                },
-                high: {
-                    name: '고등학교',
-                    emoji: '🎓',
-                    semesters: [
-                        { name: '1학기', period: '3월 초 ~ 7월 중순', note: '4~5월 중간고사, 6월 말~7월 초 기말고사' },
-                        { name: '2학기', period: '8월 중순 ~ 12월 중순', note: '10월 중간고사, 11~12월 기말고사' }
-                    ],
-                    vacations: [
-                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
-                        { name: '여름방학', period: '7/15 ~ 8/18', days: '약 35일' },
-                        { name: '겨울방학', period: '12/20 ~ 12/31', days: '약 12일+' }
-                    ],
-                    note: '3학년은 수능 후 조기 종료'
-                },
-                university: {
-                    name: '대학교',
-                    emoji: '🏛️',
-                    semesters: [
-                        { name: '1학기 (봄학기)', period: '3월 초 ~ 6월 중순', note: '기말고사 후 종강' },
-                        { name: '2학기 (가을학기)', period: '9월 초 ~ 12월 중순', note: '기말고사 후 종강' }
-                    ],
-                    vacations: [
-                        { name: '겨울방학 (전년도)', period: '1/1 ~ 2/28', days: '약 59일' },
-                        { name: '여름방학', period: '6/20 ~ 8/31', days: '약 73일' },
-                        { name: '겨울방학', period: '12/20 ~ 12/31', days: '약 12일+' }
-                    ],
-                    note: '계절학기 별도 운영'
-                }
-            }
-        };
+        // 학사일정 데이터는 js/schedule-dates.js에서 로드
 
         function getSelectedSchools() {
             const schools = [];
@@ -761,9 +652,9 @@
         function generateMarkdown() {
             const year = document.getElementById('yearSelect').value;
             const schools = getSelectedSchools();
-            const data = scheduleData[year];
+            const data = getMarkdownData(year);  // js/schedule-dates.js의 함수 사용
 
-            if (schools.length === 0) {
+            if (schools.length === 0 || !data) {
                 return '';
             }
 
@@ -772,16 +663,19 @@
 
             schools.forEach((schoolType, index) => {
                 const school = data[schoolType];
+                if (!school) return;
 
                 markdown += `## ${school.emoji} ${school.name}\n\n`;
 
-                markdown += `### 학기\n\n`;
-                markdown += `| 구분 | 기간 | 비고 |\n`;
-                markdown += `|------|------|------|\n`;
-                school.semesters.forEach(sem => {
-                    markdown += `| ${sem.name} | ${sem.period} | ${sem.note} |\n`;
-                });
-                markdown += `\n`;
+                if (school.semesters && school.semesters.length > 0) {
+                    markdown += `### 학기\n\n`;
+                    markdown += `| 구분 | 기간 | 비고 |\n`;
+                    markdown += `|------|------|------|\n`;
+                    school.semesters.forEach(sem => {
+                        markdown += `| ${sem.name} | ${sem.period} | ${sem.note} |\n`;
+                    });
+                    markdown += `\n`;
+                }
 
                 markdown += `### 방학\n\n`;
                 markdown += `| 구분 | 기간 | 일수 |\n`;
